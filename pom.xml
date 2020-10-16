@@ -115,6 +115,14 @@
         </plugins>
     </build>
 
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub OWNER Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/johnnymillergh/media-streaming</url>
+        </repository>
+    </distributionManagement>
+
     <!-- Global Dependencies -->
     <dependencies>
         <dependency>
