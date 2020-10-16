@@ -1,0 +1,25 @@
+# Travis CI Java documentation can be found in:
+# https://docs.travis-ci.com/user/languages/java/
+language: java
+
+# We can specify a list of JDKs to be used for testing. A list of available JDKs in Trusty can be seed in:
+# https://docs.travis-ci.com/user/reference/trusty/#jvm-clojure-groovy-java-scala-images
+jdk: oraclejdk11
+
+# Each job in Travis CI has several steps:
+# https://docs.travis-ci.com/user/job-lifecycle/
+# The 'language: java' directive sets up sane defaults to test common java applications.
+# We customize the script for compiling Maven application. For more about customizing the build:
+# https://docs.travis-ci.com/user/customizing-the-build
+script:
+  - ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+
+# This is to enable Codecov's coverage. If the build is successful, the code is submitted for code coverage analysis.
+#after_success:
+#  - bash <(curl -s https://codecov.io/bash)
+
+# https://docs.travis-ci.com/user/notifications#default-notification-settings
+notifications:
+  email:
+    on_success: change
+    on_failure: always

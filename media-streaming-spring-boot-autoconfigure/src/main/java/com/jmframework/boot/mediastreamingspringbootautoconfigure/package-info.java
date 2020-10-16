@@ -1,0 +1,1 @@
+package com.jmframework.boot.mediastreamingspringbootautoconfigure;

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!-- POM Reference https://maven.apache.org/pom.html -->
+
+    <!-- Project Basics -->
+    <groupId>com.jmframework.boot</groupId>
+    <artifactId>media-streaming</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>Media Steaming</name>
+    <description>Media Streaming Spring Boot Starter</description>
+    <packaging>pom</packaging>
+    <properties>
+        <java.version>11</java.version>
+        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
+    </properties>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.4.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <!-- More Project Information -->
+    <url>https://github.com/johnnymillergh/media-streaming</url>
+    <inceptionYear>2020</inceptionYear>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
+    <organization>
+        <name>JM Software, Inc.</name>
+        <url>https://github.com/johnnymillergh</url>
+    </organization>
+    <developers>
+        <developer>
+            <name>Johnny Miller (锺俊)</name>
+            <email>johnnysviva@outlook.com</email>
+            <url>https://www.linkedin.com/in/ijohnnymiller</url>
+            <organization>JM Software, Inc.</organization>
+            <organizationUrl>https://github.com/johnnymillergh</organizationUrl>
+            <timezone>8</timezone>
+        </developer>
+    </developers>
+
+    <!-- VCS Settings -->
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/johnnymillergh/exrx-net-crawler-server/issues</url>
+    </issueManagement>
+
+    <modules>
+        <module>media-streaming-spring-boot-autoconfigure</module>
+        <module>media-streaming-spring-boot-starter</module>
+        <module>media-streaming-sample-app</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.jmframework.boot</groupId>
+                <artifactId>media-streaming-spring-boot-autoconfigure</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.jmframework.boot</groupId>
+                <artifactId>media-streaming-spring-boot-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.jmsoftware.boot</groupId>
+                <artifactId>media-streaming-sample-app</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- Build Settings -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven-javadoc-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- The Versions Plugin updates the versions of components in the POM. -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <excludes>
+                        <exclude>org.apache.commons:commons-collections4</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- Global Dependencies -->
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+</project>
