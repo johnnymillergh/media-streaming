@@ -1,4 +1,10 @@
-#  (2020-10-19)
+## 1.0.1 (2020-10-19)
+
+* fix(POM): update and fix conflict version number ([cc2a201](https://github.com/johnnymillergh/media-streaming/commit/cc2a201))
+
+
+
+# 1.0.0 (2020-10-19)
 
 
 ### Bug Fixes
