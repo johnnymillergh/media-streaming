@@ -9,7 +9,7 @@
     </parent>
     <artifactId>media-streaming-spring-boot-starter</artifactId>
     <name>Media Streaming :: Spring Boot Starter</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Media Streaming :: Spring Boot Starter</description>
 
     <dependencies>
         <dependency>

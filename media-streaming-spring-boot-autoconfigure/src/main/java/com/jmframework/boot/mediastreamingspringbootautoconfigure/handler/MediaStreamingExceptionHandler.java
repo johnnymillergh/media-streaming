@@ -24,8 +24,7 @@ import java.util.Date;
 /**
  * Description: MediaStreamingExceptionHandler, change description here.
  *
- * @author Johnny Miller (锺俊), email: johnnysviva@outlook.com
- * date 10/19/2020 4:38 PM
+ * @author Johnny Miller (锺俊), email: johnnysviva@outlook.com, date: 10/19/2020 4:38 PM
  **/
 @Slf4j
 @Order(-2)

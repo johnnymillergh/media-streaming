@@ -10,8 +10,7 @@ import javax.annotation.PostConstruct;
 /**
  * Description: MediaStreamingAutoConfiguration, change description here.
  *
- * @author 钟俊, email: zhongjun@tuguide.cn
- * date 10/19/2020 2:51 PM
+ * @author 钟俊, email: zhongjun@tuguide.cn, date: 10/19/2020 2:51 PM
  **/
 @Slf4j
 @Configuration

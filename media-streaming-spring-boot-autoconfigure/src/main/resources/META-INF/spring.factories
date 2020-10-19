@@ -2,4 +2,10 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.jmframework.boot.mediastreamingspringbootautoconfigure.configuration.MediaStreamingAutoConfiguration,\
   com.jmframework.boot.mediastreamingspringbootautoconfigure.configuration.WebFluxAutoConfiguration,\
-  com.jmframework.boot.mediastreamingspringbootautoconfigure.handler.MediaStreamingExceptionHandler
+  com.jmframework.boot.mediastreamingspringbootautoconfigure.handler.MediaStreamingExceptionHandler,\
+  com.jmframework.boot.mediastreamingspringbootautoconfigure.handler.VideoRouteHandler,\
+com.jmframework.boot.mediastreamingspringbootautoconfigure.api.VideoRoutes,\
+  com.jmframework.boot.mediastreamingspringbootautoconfigure.services.impl.VideoServiceImpl,\
+  com.jmframework.boot.mediastreamingspringbootautoconfigure.services.impl.FileServiceImpl,\
+  com.jmframework.boot.mediastreamingspringbootautoconfigure.repository.impl.InMemoryVideoRepository,\
+  com.jmframework.boot.mediastreamingspringbootautoconfigure.configuration.Bootstrap

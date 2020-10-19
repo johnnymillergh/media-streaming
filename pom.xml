@@ -9,7 +9,7 @@
     <artifactId>media-streaming</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Media Steaming</name>
-    <description>Media Streaming Spring Boot Starter</description>
+    <description>Media Streaming for Java</description>
     <packaging>pom</packaging>
     <properties>
         <java.version>11</java.version>
