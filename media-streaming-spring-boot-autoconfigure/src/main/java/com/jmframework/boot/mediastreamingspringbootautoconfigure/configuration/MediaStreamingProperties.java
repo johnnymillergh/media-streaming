@@ -14,15 +14,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class MediaStreamingProperties {
     public static final String PREFIX = "media-streaming";
     /**
-     * Initial Cache Capacity
+     * Video directory on file system
      */
-    private int initialCacheCapacity = 4096;
-    /**
-     * Maximum Cache Capacity
-     */
-    private int maximumCacheCapacity = 8192;
-    /**
-     * Expiration Time
-     */
-    private int expirationTime = 60 * 10;
+    private String videoDirectoryOnFileSystem;
 }
