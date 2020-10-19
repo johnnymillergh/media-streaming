@@ -1,9 +1,10 @@
-# 1.0.0 (2020-10-19)
+#  (2020-10-19)
 
 
 ### Bug Fixes
 
 * add a public class ([c04008e](https://github.com/johnnymillergh/media-streaming/commit/c04008e472f85db9b3e19ef357d5622518d61e6e))
+* add method comments ([0da2555](https://github.com/johnnymillergh/media-streaming/commit/0da25556a5f2a15cd56a29d8bafd5f8f7b1fa5b6))
 * delete unknown tag `date` ([8297f99](https://github.com/johnnymillergh/media-streaming/commit/8297f99461cb65d82107e3a292cce7daad466c24))
 * **Travis:** add file permission before install ([70496a9](https://github.com/johnnymillergh/media-streaming/commit/70496a93d587fc7885809b9c556ca8225a098ae5))
 

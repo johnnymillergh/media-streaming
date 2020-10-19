@@ -16,13 +16,18 @@ import java.util.stream.BaseStream;
  * @author Johnny Miller (锺俊), email: johnnysviva@outlook.com, date: 10/19/2020 5:24 PM
  */
 public interface FileService {
+    /**
+     * Gets all files.
+     *
+     * @return the all files
+     */
     Flux<Path> getAllFiles();
 
     /**
      * default method to create a flux from a stream of file paths
      *
      * @param path to traverse
-     * @return Flux<Path>
+     * @return Flux<Path> flux
      */
     default Flux<Path> fromPath(Path path) {
         return Flux.using(() -> Files.walk(path, FileVisitOption.FOLLOW_LINKS), Flux::fromStream, BaseStream::close)

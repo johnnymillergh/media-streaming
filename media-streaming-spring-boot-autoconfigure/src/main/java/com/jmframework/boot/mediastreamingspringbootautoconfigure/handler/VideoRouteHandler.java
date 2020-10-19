@@ -21,7 +21,7 @@ import reactor.core.publisher.Mono;
  * Description: VideoRouteHandler, change description here.
  *
  * @author Johnny Miller (锺俊), email: johnnysviva@outlook.com, date: 10/19/2020 5:29 PM
- **/
+ */
 @Component
 public class VideoRouteHandler {
     private final VideoService videoService;
@@ -34,6 +34,12 @@ public class VideoRouteHandler {
     }
 
 
+    /**
+     * List videos mono.
+     *
+     * @param request the request
+     * @return the mono
+     */
     public Mono<ServerResponse> listVideos(ServerRequest request) {
 
         Flux<Video> videos = videoService.getAllVideos();
@@ -56,6 +62,12 @@ public class VideoRouteHandler {
                 .body(videoDetailsFlux, VideoDetails.class);
     }
 
+    /**
+     * Gets partial content.
+     *
+     * @param request the request
+     * @return the partial content
+     */
     public Mono<ServerResponse> getPartialContent(ServerRequest request) {
         String name = request.pathVariable("name");
         Mono<ResourceRegion> resourceRegionMono = videoService.getRegion(name, request);
@@ -75,6 +87,9 @@ public class VideoRouteHandler {
      * This function gets a file from the file system and returns it as a whole
      * videoResource.contentLength() is a blocking call, therefore it is wrapped in a Mono.
      * it returns a FileNotFound exception which is wrapped and propagated down the stream
+     *
+     * @param request the request
+     * @return the full content
      */
     public Mono<ServerResponse> getFullContent(ServerRequest request) {
 
