@@ -27,7 +27,7 @@ public interface FileService {
      * default method to create a flux from a stream of file paths
      *
      * @param path to traverse
-     * @return Flux<Path> flux
+     * @return flux
      */
     default Flux<Path> fromPath(Path path) {
         return Flux.using(() -> Files.walk(path, FileVisitOption.FOLLOW_LINKS), Flux::fromStream, BaseStream::close)
