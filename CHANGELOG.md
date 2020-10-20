@@ -1,3 +1,31 @@
+# 1.1.0 (2020-10-20)
+
+* refactor(media-streaming): rename class `MediaStreamingBootstrap` ([0ca94d0](https://github.com/johnnymillergh/media-streaming/commit/0ca94d0))
+* feat(FileWatcher): observe file changes on file system ([26ca2eb](https://github.com/johnnymillergh/media-streaming/commit/26ca2eb))
+* feat(Reactive): delete file observation ([e9ea525](https://github.com/johnnymillergh/media-streaming/commit/e9ea525))
+* perf(Exception): capture NoSuchFileException if the dir is wrong ([bd7c695](https://github.com/johnnymillergh/media-streaming/commit/bd7c695))
+* perf(Log): adjust log level ([f5d3264](https://github.com/johnnymillergh/media-streaming/commit/f5d3264))
+* perf(Log): print debug logs; enable log switch ([59f4789](https://github.com/johnnymillergh/media-streaming/commit/59f4789))
+* perf(media-streaming): assemble all necessary beans in class `MediaStreamingAutoConfiguration` ([d122439](https://github.com/johnnymillergh/media-streaming/commit/d122439))
+* perf(Route): reduce code warning ([a6530e1](https://github.com/johnnymillergh/media-streaming/commit/a6530e1))
+* perf(WebFlux): reactive VIDEO_CACHE data ([05ec18b](https://github.com/johnnymillergh/media-streaming/commit/05ec18b))
+* chore(starter): delete useless resource ([7c00b2b](https://github.com/johnnymillergh/media-streaming/commit/7c00b2b))
+* build(GitHub Actions): update trigger actions ([20b69cd](https://github.com/johnnymillergh/media-streaming/commit/20b69cd))
+* build(POM): update version to 1.1.0-SNAPSHOT ([4e69455](https://github.com/johnnymillergh/media-streaming/commit/4e69455))
+* build(Travis): don't skip tests ([ce6c6b9](https://github.com/johnnymillergh/media-streaming/commit/ce6c6b9))
+* test(sample-app): add unit tests for API ([888eb2c](https://github.com/johnnymillergh/media-streaming/commit/888eb2c))
+* test(sample-app): correct unit test for API ([1a367a6](https://github.com/johnnymillergh/media-streaming/commit/1a367a6))
+* fix(media-streaming): correct route bean factory ([bd9874e](https://github.com/johnnymillergh/media-streaming/commit/bd9874e))
+* docs: update README.md ([f5f2c84](https://github.com/johnnymillergh/media-streaming/commit/f5f2c84))
+* docs(sample-app): add comment for application.yml ([6d1336d](https://github.com/johnnymillergh/media-streaming/commit/6d1336d))
+
+
+### BREAKING CHANGE
+
+* observe file changes on file system
+* print debug logs; enable log switch
+
+
 ## 1.0.1 (2020-10-19)
 
 * fix(POM): update and fix conflict version number ([cc2a201](https://github.com/johnnymillergh/media-streaming/commit/cc2a201))
