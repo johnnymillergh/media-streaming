@@ -13,10 +13,12 @@
     <description>Media Streaming :: Sample App</description>
 
     <dependencies>
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.boot</groupId>-->
-        <!--            <artifactId>spring-boot-starter-web</artifactId>-->
-        <!--        </dependency>-->
+        <!-- Do not include org.springframework.boot:spring-boot-starter-web,
+             Cuz it's not compatible with spring-boot-starter-webflux.
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>-->
         <dependency>
             <groupId>com.jmframework.boot</groupId>
             <artifactId>media-streaming-spring-boot-starter</artifactId>

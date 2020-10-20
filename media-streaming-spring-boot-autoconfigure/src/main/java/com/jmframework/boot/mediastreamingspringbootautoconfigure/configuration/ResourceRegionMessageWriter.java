@@ -46,7 +46,9 @@ public class ResourceRegionMessageWriter implements HttpMessageWriter<ResourceRe
     public ResourceRegionMessageWriter() {
         this.resourceRegionEncoder = new ResourceRegionEncoder();
         this.mediaTypes = MediaType.asMediaTypes(resourceRegionEncoder.getEncodableMimeTypes());
-        log.info("Media types registered: {}", mediaTypes);
+        if (log.isDebugEnabled()) {
+            log.debug("Media types registered: {}", mediaTypes);
+        }
     }
 
     private static MediaType getResourceMediaType(MediaType mediaType, Resource resource) {
@@ -67,6 +69,7 @@ public class ResourceRegionMessageWriter implements HttpMessageWriter<ResourceRe
                 return Optional.of(((ZeroCopyHttpOutputMessage) message).writeWith(file, position, count));
             } catch (IOException e) {
                 // Ignored
+                log.error("IO Exception occurred when zeroCopy", e);
             }
         }
         return Optional.empty();
@@ -76,8 +79,9 @@ public class ResourceRegionMessageWriter implements HttpMessageWriter<ResourceRe
         if (resourceRegion.getResource().getClass() != InputStreamResource.class) {
             try {
                 return resourceRegion.getResource().contentLength();
-            } catch (Exception e) {
+            } catch (IOException e) {
                 // Ignore Exception
+                log.error("IO Exception occurred when getting length of ResourceRegion.", e);
             }
         }
         return -1;
@@ -183,7 +187,6 @@ public class ResourceRegionMessageWriter implements HttpMessageWriter<ResourceRe
             // copy ends relative to start position
 
             MediaType resourceMediaType = getResourceMediaType(mediaType, resourceRegion.getResource());
-
 
             headers.setContentType(resourceMediaType);
             headers.add(HttpHeaders.CONTENT_RANGE,

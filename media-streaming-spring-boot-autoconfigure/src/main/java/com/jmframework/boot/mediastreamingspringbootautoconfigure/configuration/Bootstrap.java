@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 
+import javax.annotation.PostConstruct;
+
 /**
  * Description: Bootstrap, change description here.
  *
@@ -17,6 +19,11 @@ import org.springframework.boot.CommandLineRunner;
 public class Bootstrap implements CommandLineRunner {
     private final VideoRepository videoRepository;
     private final FileService fileService;
+
+    @PostConstruct
+    public void afterInitialization() {
+        log.debug("Bootstrap initialization is done. Start to process videos.");
+    }
 
     @Override
     public void run(String... args) {
@@ -31,7 +38,7 @@ public class Bootstrap implements CommandLineRunner {
                 .subscribe();
 
         videoRepository.getAllVideos()
-                .doOnNext(video -> log.info("Registered video: " + video.getName()))
+                .doOnNext(video -> log.debug("Registered video: " + video.getName()))
                 .subscribe();
     }
 }

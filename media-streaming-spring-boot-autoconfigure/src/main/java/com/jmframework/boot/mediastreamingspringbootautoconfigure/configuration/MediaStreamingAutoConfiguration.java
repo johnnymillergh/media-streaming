@@ -32,7 +32,7 @@ public class MediaStreamingAutoConfiguration {
 
     @PostConstruct
     public void afterInitialization() {
-        log.info("afterInitialization: {}", mediaStreamingProperties);
+        log.debug("MediaStreamingAutoConfiguration initialization is done. {}", mediaStreamingProperties);
     }
 
     @Bean
@@ -73,7 +73,7 @@ public class MediaStreamingAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public FileService fileService(MediaStreamingProperties mediaStreamingProperties) {
+    public FileService fileService() {
         return new FileServiceImpl(mediaStreamingProperties);
     }
 
