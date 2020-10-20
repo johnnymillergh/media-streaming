@@ -12,7 +12,7 @@ jdk: oraclejdk11
 # We customize the script for compiling Maven application. For more about customizing the build:
 # https://docs.travis-ci.com/user/customizing-the-build
 script:
-  - ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+  - ./mvnw install -Dmaven.javadoc.skip=true -B -V
 
 before_install:
   - chmod +x mvnw
