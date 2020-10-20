@@ -26,6 +26,7 @@ public class VideoRoutes {
                 ).build();
     }
 
+    @SuppressWarnings("SameParameterValue")
     private static RequestPredicate param(String parameter) {
         return RequestPredicates.all().and(request -> request.queryParam(parameter).isPresent());
     }
