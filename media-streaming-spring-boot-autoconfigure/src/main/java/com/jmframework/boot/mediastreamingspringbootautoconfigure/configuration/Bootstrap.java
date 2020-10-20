@@ -29,7 +29,14 @@ public class Bootstrap implements CommandLineRunner {
     public void afterInitialization() {
         log.debug("Bootstrap initialization is done. Start to process videos.");
         log.debug("Starting FileWatcher...");
-        FileWatcher fileWatcher = new FileWatcher(mediaStreamingProperties.getVideoDirectoryOnFileSystem());
+        FileWatcher fileWatcher;
+        try {
+            fileWatcher = new FileWatcher(mediaStreamingProperties.getVideoDirectoryOnFileSystem());
+        } catch (Exception e) {
+            log.error("Cannot build FileWatcher, file observation failed! " +
+                      "Check `media-streaming.videoDirectoryOnFileSystem` configuration.", e);
+            return;
+        }
         fileWatcher.setFileWatcherHandler(new FileWatcherHandler() {
             @Override
             public void onCreated(Path file) {

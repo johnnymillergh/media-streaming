@@ -6,7 +6,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.WatchService;
 
 /**
- * Description: SingletonWatchService, change description here.
+ * Description: WatchServiceSingleton, change description here.
  *
  * @author Johnny Miller (锺俊), email: johnnysviva@outlook.com, date: 10/20/2020 4:52 PM
  **/
