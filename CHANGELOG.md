@@ -1,3 +1,11 @@
+## 1.1.1 (2020-10-20)
+
+* fix(README): correct README.md ([4d568b0](https://github.com/johnnymillergh/media-streaming/commit/4d568b0))
+* chore: update issue templates ([3c56370](https://github.com/johnnymillergh/media-streaming/commit/3c56370))
+* build(GitHub Actions): don't skip tests ([8254e1b](https://github.com/johnnymillergh/media-streaming/commit/8254e1b))
+
+
+
 # 1.1.0 (2020-10-20)
 
 * refactor(media-streaming): rename class `MediaStreamingBootstrap` ([0ca94d0](https://github.com/johnnymillergh/media-streaming/commit/0ca94d0))
