@@ -8,8 +8,10 @@ import com.jmframework.boot.mediastreamingspringbootautoconfigure.services.FileS
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
+import reactor.core.publisher.Mono;
 
 import javax.annotation.PostConstruct;
+import java.nio.file.Path;
 
 /**
  * Description: Bootstrap, change description here.
@@ -30,18 +32,26 @@ public class Bootstrap implements CommandLineRunner {
         FileWatcher fileWatcher = new FileWatcher(mediaStreamingProperties.getVideoDirectoryOnFileSystem());
         fileWatcher.setFileWatcherHandler(new FileWatcherHandler() {
             @Override
-            public void onCreated(String file) {
+            public void onCreated(Path file) {
                 log.info("onCreated: {}", file);
+                Video video = new Video();
+                video.setName(file.getFileName().toString());
+                video.setLocation(file);
+                Mono.just(video).then(videoRepository.addVideo(video)).subscribe();
             }
 
             @Override
-            public void onDeleted(String file) {
+            public void onDeleted(Path file) {
                 log.info("onDeleted: {}", file);
             }
 
             @Override
-            public void onModified(String file) {
+            public void onModified(Path file) {
                 log.info("onModified: {}", file);
+                Video video = new Video();
+                video.setName(file.getFileName().toString());
+                video.setLocation(file);
+                Mono.just(video).then(videoRepository.addVideo(video)).subscribe();
             }
         });
     }

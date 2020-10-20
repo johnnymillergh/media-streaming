@@ -66,15 +66,14 @@ public class FileWatcher {
                     Path filename = event.context();
 
                     // Resolve the filename against the directory.
-                    // If the filename is "test" and the directory is "foo", the resolved name is "test/foo".
+                    // If the filename is "test" and the directory is "foo", the resolved name is "foo/test".
                     Path child = monitoredPath.resolve(filename);
-                    String file = child.toString();
                     if (kind == ENTRY_CREATE) {
-                        fileWatcherHandler.onCreated(file);
+                        fileWatcherHandler.onCreated(child);
                     } else if (kind == ENTRY_DELETE) {
-                        fileWatcherHandler.onDeleted(file);
+                        fileWatcherHandler.onDeleted(child);
                     } else if (kind == ENTRY_MODIFY) {
-                        fileWatcherHandler.onModified(file);
+                        fileWatcherHandler.onModified(child);
                     }
                 }
 

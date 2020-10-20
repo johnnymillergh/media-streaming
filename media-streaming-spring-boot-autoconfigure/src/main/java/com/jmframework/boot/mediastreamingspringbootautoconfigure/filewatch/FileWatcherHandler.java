@@ -1,5 +1,7 @@
 package com.jmframework.boot.mediastreamingspringbootautoconfigure.filewatch;
 
+import java.nio.file.Path;
+
 /**
  * Description: FileWatcherHandler, change description here.
  *
@@ -11,19 +13,19 @@ public interface FileWatcherHandler {
      *
      * @param file the file
      */
-    void onCreated(String file);
+    void onCreated(Path file);
 
     /**
      * On deleted.
      *
      * @param file the file
      */
-    void onDeleted(String file);
+    void onDeleted(Path file);
 
     /**
      * On modified.
      *
      * @param file the file
      */
-    void onModified(String file);
+    void onModified(Path file);
 }
