@@ -1,5 +1,7 @@
 package com.jmframework.boot.mediastreamingspringbootautoconfigure.configuration;
 
+import com.jmframework.boot.mediastreamingspringbootautoconfigure.filewatch.FileWatcher;
+import com.jmframework.boot.mediastreamingspringbootautoconfigure.filewatch.FileWatcherHandler;
 import com.jmframework.boot.mediastreamingspringbootautoconfigure.model.Video;
 import com.jmframework.boot.mediastreamingspringbootautoconfigure.repository.VideoRepository;
 import com.jmframework.boot.mediastreamingspringbootautoconfigure.services.FileService;
@@ -19,10 +21,29 @@ import javax.annotation.PostConstruct;
 public class Bootstrap implements CommandLineRunner {
     private final VideoRepository videoRepository;
     private final FileService fileService;
+    private final MediaStreamingProperties mediaStreamingProperties;
 
     @PostConstruct
     public void afterInitialization() {
         log.debug("Bootstrap initialization is done. Start to process videos.");
+        log.debug("Starting FileWatcher...");
+        FileWatcher fileWatcher = new FileWatcher(mediaStreamingProperties.getVideoDirectoryOnFileSystem());
+        fileWatcher.setFileWatcherHandler(new FileWatcherHandler() {
+            @Override
+            public void onCreated(String file) {
+                log.info("onCreated: {}", file);
+            }
+
+            @Override
+            public void onDeleted(String file) {
+                log.info("onDeleted: {}", file);
+            }
+
+            @Override
+            public void onModified(String file) {
+                log.info("onModified: {}", file);
+            }
+        });
     }
 
     @Override

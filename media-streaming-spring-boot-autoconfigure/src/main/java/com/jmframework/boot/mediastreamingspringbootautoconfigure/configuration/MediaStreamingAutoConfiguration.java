@@ -3,7 +3,7 @@ package com.jmframework.boot.mediastreamingspringbootautoconfigure.configuration
 import com.jmframework.boot.mediastreamingspringbootautoconfigure.handler.MediaStreamingExceptionHandler;
 import com.jmframework.boot.mediastreamingspringbootautoconfigure.handler.VideoRouteHandler;
 import com.jmframework.boot.mediastreamingspringbootautoconfigure.repository.VideoRepository;
-import com.jmframework.boot.mediastreamingspringbootautoconfigure.repository.impl.InMemoryVideoRepository;
+import com.jmframework.boot.mediastreamingspringbootautoconfigure.repository.impl.InMemoryVideoOnFileSystemRepository;
 import com.jmframework.boot.mediastreamingspringbootautoconfigure.services.FileService;
 import com.jmframework.boot.mediastreamingspringbootautoconfigure.services.VideoService;
 import com.jmframework.boot.mediastreamingspringbootautoconfigure.services.impl.FileServiceImpl;
@@ -44,7 +44,7 @@ public class MediaStreamingAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public Bootstrap bootstrap(VideoRepository videoRepository, FileService fileService) {
-        return new Bootstrap(videoRepository, fileService);
+        return new Bootstrap(videoRepository, fileService, mediaStreamingProperties);
     }
 
     @Bean
@@ -65,7 +65,16 @@ public class MediaStreamingAutoConfiguration {
         return new VideoRouteHandler(videoService, fileService);
     }
 
+    /**
+     * Video end point router function.
+     * <p>
+     * TODO: solve Nullable Problems
+     *
+     * @param videoRouteHandler the video route handler
+     * @return the router function
+     */
     @Bean
+    @SuppressWarnings("NullableProblems")
     public RouterFunction<ServerResponse> videoEndPoint(VideoRouteHandler videoRouteHandler) {
         log.info("videoEndPoint");
         return route()
@@ -91,7 +100,7 @@ public class MediaStreamingAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public VideoRepository videoRepository() {
-        return new InMemoryVideoRepository();
+        return new InMemoryVideoOnFileSystemRepository();
     }
 
     @SuppressWarnings("SameParameterValue")

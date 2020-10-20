@@ -32,4 +32,12 @@ public interface VideoRepository {
      * @return the mono
      */
     Mono<Video> addVideo(Video video);
+
+    /**
+     * Delete video by name mono.
+     *
+     * @param name the name
+     * @return the mono
+     */
+    Mono<Video> deleteVideoByName(String name);
 }

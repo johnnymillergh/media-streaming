@@ -10,13 +10,12 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Description: InMemoryVideoRepository, change description here.
+ * Description: InMemoryVideoOnFileSystemRepository, change description here.
  *
  * @author Johnny Miller (锺俊), email: johnnysviva@outlook.com
  * date 10/19/2020 5:16 PM
  **/
-public class InMemoryVideoRepository implements VideoRepository {
-
+public class InMemoryVideoOnFileSystemRepository implements VideoRepository {
     private final Map<String, Video> videoCache = new ConcurrentHashMap<>();
 
     @Override
@@ -33,15 +32,16 @@ public class InMemoryVideoRepository implements VideoRepository {
 
     @Override
     public Flux<Video> getAllVideos() {
-        synchronized (videoCache) {
-            return Flux.fromIterable(videoCache.values());
-        }
+        return Flux.fromIterable(videoCache.values());
     }
 
     @Override
     public Mono<Video> addVideo(Video video) {
-        synchronized (videoCache) {
-            return Mono.fromCallable(() -> videoCache.put(video.getName(), video));
-        }
+        return Mono.fromCallable(() -> videoCache.put(video.getName(), video));
+    }
+
+    @Override
+    public Mono<Video> deleteVideoByName(String name) {
+        return Mono.fromCallable(() -> videoCache.remove(name));
     }
 }
