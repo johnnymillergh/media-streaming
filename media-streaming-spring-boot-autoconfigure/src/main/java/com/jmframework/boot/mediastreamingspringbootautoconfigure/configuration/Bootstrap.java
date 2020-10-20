@@ -40,7 +40,7 @@ public class Bootstrap implements CommandLineRunner {
         fileWatcher.setFileWatcherHandler(new FileWatcherHandler() {
             @Override
             public void onCreated(Path file) {
-                log.info("onCreated: {}", file);
+                log.debug("Created file observed: {}", file);
                 Video video = new Video();
                 video.setName(file.getFileName().toString());
                 video.setLocation(file);
@@ -49,12 +49,13 @@ public class Bootstrap implements CommandLineRunner {
 
             @Override
             public void onDeleted(Path file) {
-                log.info("onDeleted: {}", file);
+                log.debug("Deleted file observed: {}", file);
+                Mono.just(file).then(videoRepository.deleteVideoByPath(file)).subscribe();
             }
 
             @Override
             public void onModified(Path file) {
-                log.info("onModified: {}", file);
+                log.info("Modified file observed: {}", file);
                 Video video = new Video();
                 video.setName(file.getFileName().toString());
                 video.setLocation(file);

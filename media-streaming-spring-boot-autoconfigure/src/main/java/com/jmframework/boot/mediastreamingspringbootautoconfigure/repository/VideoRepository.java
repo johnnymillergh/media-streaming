@@ -4,6 +4,8 @@ import com.jmframework.boot.mediastreamingspringbootautoconfigure.model.Video;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.nio.file.Path;
+
 /**
  * Description: VideoRepository, change description here.
  *
@@ -32,6 +34,14 @@ public interface VideoRepository {
      * @return the mono
      */
     Mono<Video> addVideo(Video video);
+
+    /**
+     * Delete video by path mono.
+     *
+     * @param path the path
+     * @return the mono
+     */
+    Mono<Video> deleteVideoByPath(Path path);
 
     /**
      * Delete video by name mono.

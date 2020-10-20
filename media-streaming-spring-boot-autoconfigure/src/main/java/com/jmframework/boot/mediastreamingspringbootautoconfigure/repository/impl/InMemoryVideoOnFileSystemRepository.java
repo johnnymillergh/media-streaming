@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.nio.file.Path;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -39,10 +40,12 @@ public class InMemoryVideoOnFileSystemRepository implements VideoRepository {
 
     @Override
     public Mono<Video> addVideo(Video video) {
-        return Mono.fromCallable(() -> {
-            log.debug(VIDEO_CACHE.toString());
-            return VIDEO_CACHE.put(video.getName(), video);
-        });
+        return Mono.fromCallable(() -> VIDEO_CACHE.put(video.getName(), video));
+    }
+
+    @Override
+    public Mono<Video> deleteVideoByPath(Path path) {
+        return this.deleteVideoByName(path.getFileName().toString());
     }
 
     @Override
