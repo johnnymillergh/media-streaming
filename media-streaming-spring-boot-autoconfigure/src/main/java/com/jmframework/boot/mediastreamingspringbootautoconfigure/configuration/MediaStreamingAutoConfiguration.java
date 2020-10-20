@@ -21,7 +21,7 @@ import javax.annotation.PostConstruct;
 /**
  * Description: MediaStreamingAutoConfiguration, change description here.
  *
- * @author 钟俊, email: zhongjun@tuguide.cn, date: 10/19/2020 2:51 PM
+ * @author Johnny Miller (锺俊), email: johnnysviva@outlook.com, date: 10/19/2020 2:51 PM
  **/
 @Slf4j
 @Configuration
@@ -62,6 +62,7 @@ public class MediaStreamingAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public VideoRoutes videoRoutes() {
+        log.info("videoRoutes");
         return new VideoRoutes();
     }
 

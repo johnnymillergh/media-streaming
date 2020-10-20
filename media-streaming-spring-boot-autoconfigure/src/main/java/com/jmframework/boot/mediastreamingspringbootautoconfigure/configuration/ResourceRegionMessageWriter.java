@@ -46,9 +46,7 @@ public class ResourceRegionMessageWriter implements HttpMessageWriter<ResourceRe
     public ResourceRegionMessageWriter() {
         this.resourceRegionEncoder = new ResourceRegionEncoder();
         this.mediaTypes = MediaType.asMediaTypes(resourceRegionEncoder.getEncodableMimeTypes());
-        if (log.isDebugEnabled()) {
-            log.debug("Media types registered: {}", mediaTypes);
-        }
+        log.debug("Media types registered: {}", mediaTypes);
     }
 
     private static MediaType getResourceMediaType(MediaType mediaType, Resource resource) {

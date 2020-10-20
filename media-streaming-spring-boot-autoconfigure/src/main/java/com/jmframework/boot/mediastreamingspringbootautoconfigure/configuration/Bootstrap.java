@@ -12,7 +12,7 @@ import javax.annotation.PostConstruct;
 /**
  * Description: Bootstrap, change description here.
  *
- * @author 钟俊, email: zhongjun@tuguide.cn, date: 10/19/2020 2:51 PM
+ * @author Johnny Miller (锺俊), email: johnnysviva@outlook.com, date: 10/19/2020 2:51 PM
  **/
 @Slf4j
 @RequiredArgsConstructor
