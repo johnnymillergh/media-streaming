@@ -5,9 +5,10 @@
     Spring Boot Starter
   </div>
 </div>
+
 [![GitHub release](https://img.shields.io/github/release/johnnymillergh/media-streaming.svg)](https://github.com/johnnymillergh/media-streaming/releases)
 [![Build Status](https://travis-ci.com/johnnymillergh/media-streaming.svg?branch=master)](https://travis-ci.com/johnnymillergh/media-streaming)
-![Maven Package](https://github.com/johnnymillergh/media-streaming/workflows/Maven%20Package/badge.svg?branch=master)
+[![Maven Package](https://github.com/johnnymillergh/media-streaming/workflows/Maven%20Package/badge.svg?branch=master)](https://github.com/johnnymillergh?tab=packages&repo_name=media-streaming)
 [![GitHub issues](https://img.shields.io/github/issues/johnnymillergh/media-streaming)](https://github.com/johnnymillergh/media-streaming/issues)
 [![GitHub forks](https://img.shields.io/github/forks/johnnymillergh/media-streaming)](https://github.com/johnnymillergh/media-streaming/network)
 [![GitHub stars](https://img.shields.io/github/stars/johnnymillergh/media-streaming)](https://github.com/johnnymillergh/media-streaming)
