@@ -43,8 +43,8 @@ public class MediaStreamingAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public Bootstrap bootstrap(VideoRepository videoRepository, FileService fileService) {
-        return new Bootstrap(videoRepository, fileService, mediaStreamingProperties);
+    public MediaStreamingBootstrap bootstrap(VideoRepository videoRepository, FileService fileService) {
+        return new MediaStreamingBootstrap(videoRepository, fileService, mediaStreamingProperties);
     }
 
     @Bean

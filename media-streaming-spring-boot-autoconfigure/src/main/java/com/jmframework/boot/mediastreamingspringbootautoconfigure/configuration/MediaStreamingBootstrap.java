@@ -14,20 +14,20 @@ import javax.annotation.PostConstruct;
 import java.nio.file.Path;
 
 /**
- * Description: Bootstrap, change description here.
+ * Description: MediaStreamingBootstrap, change description here.
  *
  * @author Johnny Miller (锺俊), email: johnnysviva@outlook.com, date: 10/19/2020 2:51 PM
  **/
 @Slf4j
 @RequiredArgsConstructor
-public class Bootstrap implements CommandLineRunner {
+public class MediaStreamingBootstrap implements CommandLineRunner {
     private final VideoRepository videoRepository;
     private final FileService fileService;
     private final MediaStreamingProperties mediaStreamingProperties;
 
     @PostConstruct
-    public void afterInitialization() {
-        log.debug("Bootstrap initialization is done. Start to process videos.");
+    private void postConstruct() {
+        log.debug("MediaStreamingBootstrap initialization is done. Start to process videos.");
         log.debug("Starting FileWatcher...");
         FileWatcher fileWatcher;
         try {
