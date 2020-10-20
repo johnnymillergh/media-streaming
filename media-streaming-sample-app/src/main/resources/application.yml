@@ -1,2 +1,7 @@
 media-streaming:
   video-directory-on-file-system: 'C:\\Users\\Johnny\\Videos\\Mine'
+
+# Configure logging level of Media Streaming
+logging:
+  level:
+    com.jmframework.boot.mediastreamingspringbootautoconfigure: DEBUG

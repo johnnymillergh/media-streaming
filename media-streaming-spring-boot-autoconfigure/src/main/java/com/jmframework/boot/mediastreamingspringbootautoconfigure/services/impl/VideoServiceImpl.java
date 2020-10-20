@@ -11,7 +11,6 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.support.ResourceRegion;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRange;
-import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import reactor.core.Exceptions;
 import reactor.core.publisher.Flux;
@@ -29,7 +28,6 @@ import static java.lang.Long.min;
  * @author Johnny Miller (锺俊), email: johnnysviva@outlook.com, date: 10/19/2020 5:26 PM
  */
 @Slf4j
-@Service
 public class VideoServiceImpl implements VideoService {
     private static final Logger logger = LoggerFactory.getLogger(VideoServiceImpl.class);
     private static final long BYTE_LENGTH = 1024;

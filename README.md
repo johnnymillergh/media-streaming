@@ -5,9 +5,9 @@
     Spring Boot Starter
   </div>
 </div>
-
 [![GitHub release](https://img.shields.io/github/release/johnnymillergh/media-streaming.svg)](https://github.com/johnnymillergh/media-streaming/releases)
 [![Build Status](https://travis-ci.com/johnnymillergh/media-streaming.svg?branch=master)](https://travis-ci.com/johnnymillergh/media-streaming)
+![Maven Package](https://github.com/johnnymillergh/media-streaming/workflows/Maven%20Package/badge.svg?branch=master)
 [![GitHub issues](https://img.shields.io/github/issues/johnnymillergh/media-streaming)](https://github.com/johnnymillergh/media-streaming/issues)
 [![GitHub forks](https://img.shields.io/github/forks/johnnymillergh/media-streaming)](https://github.com/johnnymillergh/media-streaming/network)
 [![GitHub stars](https://img.shields.io/github/stars/johnnymillergh/media-streaming)](https://github.com/johnnymillergh/media-streaming)
@@ -18,7 +18,7 @@
 
 # Media Streaming
 
-**Media Streaming**, a Spring Boot Starter project.
+**Media Streaming**, a Spring Boot Starter project, which makes media streaming easier in your Spring Boot based project.
 
 ## Features
 
@@ -28,21 +28,23 @@ Here is the highlights of **Media Streaming**:
 
    `org.springframework.boot:spring-boot-starter-parent` - [![Spring Boot](https://maven-badges.herokuapp.com/maven-central/org.springframework.boot/spring-boot-starter-parent/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.springframework.boot/spring-boot-starter-parent/)
 
-2. Docker support.
+2. Media streaming over HTTP. (Basic media streaming ability was completed, more and more features is coming soon)
 
-6. API visualization. Enhanced Swagger API documentation.
+3. …
 
-7. Log compression.
+## Installation
 
-8. Request log.
+The easiest way is to install the library via its [Maven package](http://search.maven.org/#search|gav|1|g%3A"com.drewnoakes" AND a%3A"metadata-extractor").
 
-9. Method Argument Validation Aspect.
+```xml
+<dependency>
+  <groupId>com.jmframework.boot</groupId>
+  <artifactId>media-streaming-spring-boot-starter</artifactId>
+  <version>1.0.1</version>
+</dependency>
+```
 
-10. Docker container log persistence.
-
-11. Startup statistics.
-
-12. Customized startup banner.
+Alternatively, download it from the [releases page](https://github.com/johnnymillergh/media-streaming/releases).
 
 ## Usage
 
@@ -52,7 +54,7 @@ Here is the highlights of **Media Streaming**:
    $ git clone https://github.com/johnnymillergh/media-streaming.git
    ```
 
-2. Build with newest Intellij IDEA.
+2. Build with the newest IntelliJ IDEA.
 
 3. Click the green triangle to Run.
 
