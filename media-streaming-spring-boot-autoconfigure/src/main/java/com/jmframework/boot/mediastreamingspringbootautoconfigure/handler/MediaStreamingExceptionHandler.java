@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
-import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.handler.WebFluxResponseStatusExceptionHandler;
 import org.springframework.web.server.ServerWebExchange;
@@ -28,12 +27,11 @@ import java.util.Date;
  **/
 @Slf4j
 @Order(-2)
-@Component
 public class MediaStreamingExceptionHandler extends WebFluxResponseStatusExceptionHandler {
     final SimpleDateFormat simpleDate = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
     public MediaStreamingExceptionHandler() {
-        log.info("Initialized MediaStreamingExceptionHandler");
+        log.debug("Initialized MediaStreamingExceptionHandler");
     }
 
     @Override
