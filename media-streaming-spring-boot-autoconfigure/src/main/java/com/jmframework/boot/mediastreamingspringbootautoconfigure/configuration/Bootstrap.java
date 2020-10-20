@@ -6,7 +6,6 @@ import com.jmframework.boot.mediastreamingspringbootautoconfigure.services.FileS
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
 
 /**
  * Description: Bootstrap, change description here.
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Component;
  * @author 钟俊, email: zhongjun@tuguide.cn, date: 10/19/2020 2:51 PM
  **/
 @Slf4j
-@Component
 @RequiredArgsConstructor
 public class Bootstrap implements CommandLineRunner {
     private final VideoRepository videoRepository;

@@ -7,7 +7,7 @@ ${AnsiStyle.BOLD}${AnsiColor.BRIGHT_GREEN}
  (  _ _    /_   /_|
 __)(///)/)((-  (  |/)/)
        /          / /
-${AnsiStyle.BOLD}Muscle MIS :: Powered by Spring Boot ::${spring-boot.formatted-version}
+${AnsiStyle.BOLD}Media Streaming Sample App :: Powered by Spring Boot ::${spring-boot.formatted-version}
 ${AnsiColor.CYAN}Author: Johnny Miller (鍾俊), email: johnnysviva@outlook.com
 ${AnsiStyle.NORMAL}${AnsiColor.MAGENTA}http://patorjk.com/software/taag/#p=display&f=Italic&t=Media%20Streaming%0ASample%20App
 ${AnsiColor.BRIGHT_BLACK}

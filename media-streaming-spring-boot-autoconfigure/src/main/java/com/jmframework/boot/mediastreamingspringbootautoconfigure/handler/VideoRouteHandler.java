@@ -4,13 +4,12 @@ import com.jmframework.boot.mediastreamingspringbootautoconfigure.model.Video;
 import com.jmframework.boot.mediastreamingspringbootautoconfigure.services.FileService;
 import com.jmframework.boot.mediastreamingspringbootautoconfigure.services.VideoService;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.support.ResourceRegion;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.Exceptions;
@@ -22,17 +21,10 @@ import reactor.core.publisher.Mono;
  *
  * @author Johnny Miller (锺俊), email: johnnysviva@outlook.com, date: 10/19/2020 5:29 PM
  */
-@Component
+@RequiredArgsConstructor
 public class VideoRouteHandler {
     private final VideoService videoService;
     private final FileService fileService;
-
-    @Autowired
-    public VideoRouteHandler(VideoService videoService, FileService fileService) {
-        this.videoService = videoService;
-        this.fileService = fileService;
-    }
-
 
     /**
      * List videos mono.

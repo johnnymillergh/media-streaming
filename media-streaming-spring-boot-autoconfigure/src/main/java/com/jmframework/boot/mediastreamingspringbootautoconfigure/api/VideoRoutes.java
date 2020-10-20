@@ -2,7 +2,6 @@ package com.jmframework.boot.mediastreamingspringbootautoconfigure.api;
 
 import com.jmframework.boot.mediastreamingspringbootautoconfigure.handler.VideoRouteHandler;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.server.RequestPredicate;
 import org.springframework.web.reactive.function.server.RequestPredicates;
 import org.springframework.web.reactive.function.server.RouterFunction;
@@ -16,7 +15,6 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
  *
  * @author Johnny Miller (锺俊), email: johnnysviva@outlook.com, date: 10/19/2020 4:38 PM
  **/
-@Configuration
 public class VideoRoutes {
     @Bean
     RouterFunction<ServerResponse> videoEndPoint(VideoRouteHandler videoRouteHandler) {
