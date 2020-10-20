@@ -31,7 +31,7 @@ public class MediaStreamingExceptionHandler extends WebFluxResponseStatusExcepti
     final SimpleDateFormat simpleDate = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
     public MediaStreamingExceptionHandler() {
-        log.info("Initialized MediaStreamingExceptionHandler");
+        log.debug("Initialized MediaStreamingExceptionHandler");
     }
 
     @Override
