@@ -11,6 +11,7 @@ import org.springframework.boot.CommandLineRunner;
 import reactor.core.publisher.Mono;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.nio.file.Path;
 
 /**
@@ -24,12 +25,12 @@ public class MediaStreamingBootstrap implements CommandLineRunner {
     private final VideoRepository videoRepository;
     private final FileService fileService;
     private final MediaStreamingProperties mediaStreamingProperties;
+    private FileWatcher fileWatcher;
 
     @PostConstruct
     private void postConstruct() {
         log.debug("MediaStreamingBootstrap initialization is done. Start to process videos.");
         log.debug("Starting FileWatcher...");
-        FileWatcher fileWatcher;
         try {
             fileWatcher = new FileWatcher(mediaStreamingProperties.getVideoDirectoryOnFileSystem());
         } catch (Exception e) {
@@ -79,5 +80,11 @@ public class MediaStreamingBootstrap implements CommandLineRunner {
         videoRepository.getAllVideos()
                 .doOnNext(video -> log.debug("Registered video: " + video.getName()))
                 .subscribe();
+    }
+
+    @PreDestroy
+    private void preDestroy() {
+        log.debug("Destroying {}, fileWatcher: {}", this.getClass().getSimpleName(), fileWatcher);
+        fileWatcher.destroy();
     }
 }

@@ -86,11 +86,13 @@ public class ResourceRegionMessageWriter implements HttpMessageWriter<ResourceRe
     }
 
     @Override
+    @SuppressWarnings("NullableProblems")
     public boolean canWrite(ResolvableType elementType, MediaType mediaType) {
         return resourceRegionEncoder.canEncode(elementType, mediaType);
     }
 
     @Override
+    @SuppressWarnings("NullableProblems")
     public List<MediaType> getWritableMediaTypes() {
         return this.mediaTypes;
     }
@@ -108,6 +110,7 @@ public class ResourceRegionMessageWriter implements HttpMessageWriter<ResourceRe
      * @return indicates completion or error
      */
     @Override
+    @SuppressWarnings("NullableProblems")
     public Mono<Void> write(Publisher<? extends ResourceRegion> inputStream,
                             ResolvableType elementType, MediaType mediaType,
                             ReactiveHttpOutputMessage message,
@@ -115,7 +118,7 @@ public class ResourceRegionMessageWriter implements HttpMessageWriter<ResourceRe
 
         return Mono.from(inputStream)
                 .flatMap(resource ->
-                        writeResource(resource, elementType, mediaType, message, hints));
+                                 writeResource(resource, elementType, mediaType, message, hints));
     }
 
     private Mono<Void> writeResource(ResourceRegion resourceRegion,
@@ -125,8 +128,8 @@ public class ResourceRegionMessageWriter implements HttpMessageWriter<ResourceRe
 
         HttpHeaders headers = message.getHeaders();
 
-        Mono<MediaType> mediaTypeMono = Mono.fromCallable(() -> getResourceMediaType(mediaType,
-                resourceRegion.getResource()));
+        Mono<MediaType> mediaTypeMono = Mono
+                .fromCallable(() -> getResourceMediaType(mediaType, resourceRegion.getResource()));
 
         Mono<Long> headersMono = Mono.fromCallable(() -> lengthOf(resourceRegion))
                 .filter(length -> length > -1)
@@ -140,16 +143,14 @@ public class ResourceRegionMessageWriter implements HttpMessageWriter<ResourceRe
                     return resourceType;
                 })
                 .flatMap(resourceType ->
-                        zeroCopy(resourceRegion.getResource(), resourceRegion, message)
-                                .orElseGet(() -> {
-
-                                    Mono<ResourceRegion> input = Mono.just(resourceRegion);
-                                    DataBufferFactory bufferFactory = message.bufferFactory();
-                                    Flux<DataBuffer> body =
-                                            this.resourceRegionEncoder.encode(input, bufferFactory, elementType,
-                                                    resourceType, hints);
-                                    return message.writeWith(body);
-                                }));
+                                 zeroCopy(resourceRegion.getResource(), resourceRegion, message)
+                                         .orElseGet(() -> {
+                                             Mono<ResourceRegion> input = Mono.just(resourceRegion);
+                                             DataBufferFactory bufferFactory = message.bufferFactory();
+                                             Flux<DataBuffer> body = this.resourceRegionEncoder
+                                                     .encode(input, bufferFactory, elementType, resourceType, hints);
+                                             return message.writeWith(body);
+                                         }));
     }
 
     /**
@@ -168,6 +169,7 @@ public class ResourceRegionMessageWriter implements HttpMessageWriter<ResourceRe
      * @return a {@link Mono} that indicates completion of writing or error
      */
     @Override
+    @SuppressWarnings("NullableProblems")
     public Mono<Void> write(Publisher<? extends ResourceRegion> inputStream,
                             ResolvableType actualType, ResolvableType elementType,
                             MediaType mediaType, ServerHttpRequest request,
@@ -188,7 +190,7 @@ public class ResourceRegionMessageWriter implements HttpMessageWriter<ResourceRe
 
             headers.setContentType(resourceMediaType);
             headers.add(HttpHeaders.CONTENT_RANGE,
-                    "bytes " + startPosition + '-' + endPosition + '/' + contentLength);
+                        "bytes " + startPosition + '-' + endPosition + '/' + contentLength);
             headers.setContentLength(endPosition - startPosition + 1);
 
             response.setStatusCode(HttpStatus.PARTIAL_CONTENT);

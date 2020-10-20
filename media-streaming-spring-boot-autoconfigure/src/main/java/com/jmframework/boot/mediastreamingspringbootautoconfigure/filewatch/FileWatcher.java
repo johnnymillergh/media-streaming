@@ -5,7 +5,6 @@ import lombok.Setter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.annotation.PreDestroy;
 import java.nio.file.*;
 import java.util.Optional;
 import java.util.concurrent.*;
@@ -25,7 +24,8 @@ public class FileWatcher {
             new ThreadFactoryBuilder().setNameFormat("file-watcher-thread-%d").build();
     private static final ExecutorService THREAD_POOL =
             new ThreadPoolExecutor(1, 2, 0L, TimeUnit.MILLISECONDS,
-                    new LinkedBlockingQueue<>(1024), NAMED_THREAD_FACTORY, new ThreadPoolExecutor.AbortPolicy());
+                                   new LinkedBlockingQueue<>(1024), NAMED_THREAD_FACTORY,
+                                   new ThreadPoolExecutor.AbortPolicy());
 
     private final Path monitoredPath;
     private FileWatcherHandler fileWatcherHandler;
@@ -38,9 +38,9 @@ public class FileWatcher {
     private FileWatcher(Path path) {
         this.monitoredPath = path;
         this.monitoredPath.register(WatchServiceSingleton.getInstance(),
-                StandardWatchEventKinds.ENTRY_CREATE,
-                StandardWatchEventKinds.ENTRY_DELETE,
-                StandardWatchEventKinds.ENTRY_MODIFY);
+                                    StandardWatchEventKinds.ENTRY_CREATE,
+                                    StandardWatchEventKinds.ENTRY_DELETE,
+                                    StandardWatchEventKinds.ENTRY_MODIFY);
         THREAD_POOL.execute(this::monitor);
     }
 
@@ -88,9 +88,8 @@ public class FileWatcher {
         }
     }
 
-    @PreDestroy
     @SneakyThrows
-    private void onPreDestroy() {
+    public void destroy() {
         THREAD_POOL.awaitTermination(5, TimeUnit.SECONDS);
         log.debug("THREAD_POOL for FileWatcher was terminated.");
     }
