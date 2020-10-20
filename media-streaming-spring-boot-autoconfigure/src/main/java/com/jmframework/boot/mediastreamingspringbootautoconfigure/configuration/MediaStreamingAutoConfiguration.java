@@ -1,6 +1,5 @@
 package com.jmframework.boot.mediastreamingspringbootautoconfigure.configuration;
 
-import com.jmframework.boot.mediastreamingspringbootautoconfigure.api.VideoRoutes;
 import com.jmframework.boot.mediastreamingspringbootautoconfigure.handler.MediaStreamingExceptionHandler;
 import com.jmframework.boot.mediastreamingspringbootautoconfigure.handler.VideoRouteHandler;
 import com.jmframework.boot.mediastreamingspringbootautoconfigure.repository.VideoRepository;
@@ -15,8 +14,15 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.reactive.function.server.RequestPredicate;
+import org.springframework.web.reactive.function.server.RequestPredicates;
+import org.springframework.web.reactive.function.server.RouterFunction;
+import org.springframework.web.reactive.function.server.ServerResponse;
 
 import javax.annotation.PostConstruct;
+
+import static org.springframework.web.reactive.function.server.RequestPredicates.path;
+import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
 /**
  * Description: MediaStreamingAutoConfiguration, change description here.
@@ -60,10 +66,14 @@ public class MediaStreamingAutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnMissingBean
-    public VideoRoutes videoRoutes() {
-        log.info("videoRoutes");
-        return new VideoRoutes();
+    public RouterFunction<ServerResponse> videoEndPoint(VideoRouteHandler videoRouteHandler) {
+        log.info("videoEndPoint");
+        return route()
+                .nest(path("/videos"), builder -> builder.GET("", videoRouteHandler::listVideos)
+                        .nest(path("/{name}"), videoBuilder -> videoBuilder.GET("", param("partial"),
+                                videoRouteHandler::getPartialContent).GET("", videoRouteHandler::getFullContent)
+                        )
+                ).build();
     }
 
     @Bean
@@ -82,5 +92,10 @@ public class MediaStreamingAutoConfiguration {
     @ConditionalOnMissingBean
     public VideoRepository videoRepository() {
         return new InMemoryVideoRepository();
+    }
+
+    @SuppressWarnings("SameParameterValue")
+    private static RequestPredicate param(String parameter) {
+        return RequestPredicates.all().and(request -> request.queryParam(parameter).isPresent());
     }
 }
