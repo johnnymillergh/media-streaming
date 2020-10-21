@@ -39,7 +39,7 @@ The easiest way is to install the library via its [GitHub Maven package](https:/
 
 ```xml
 <dependency>
-  <groupId>com.jmframework.boot</groupId>
+  <groupId>com.github.johnnymillergh.boot</groupId>
   <artifactId>media-streaming-spring-boot-starter</artifactId>
   <version>1.0.1</version>
 </dependency>

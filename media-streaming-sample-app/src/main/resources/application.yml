@@ -4,7 +4,7 @@ media-streaming:
 # Configure logging level of Media Streaming
 logging:
   level:
-    com.jmframework.boot.mediastreamingspringbootautoconfigure: DEBUG
+    com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure: DEBUG
 
 server:
   shutdown: graceful
