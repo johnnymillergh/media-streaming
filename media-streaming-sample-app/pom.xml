@@ -7,7 +7,6 @@
         <artifactId>media-streaming</artifactId>
         <version>1.2.0-SNAPSHOT</version>
     </parent>
-    <groupId>com.jmsoftware.boot</groupId>
     <artifactId>media-streaming-sample-app</artifactId>
     <name>Media Streaming :: Sample App</name>
     <description>Media Streaming :: Sample App</description>

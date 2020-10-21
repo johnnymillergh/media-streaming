@@ -40,7 +40,7 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.jmsoftware.boot</groupId>
+                <groupId>com.github.johnnymillergh.boot</groupId>
                 <artifactId>media-streaming-sample-app</artifactId>
                 <version>${project.version}</version>
             </dependency>
