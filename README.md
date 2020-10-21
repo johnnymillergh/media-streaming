@@ -1,9 +1,9 @@
 <div style="position: relative; text-align: center;">
-  <img src="https://raw.githubusercontent.com/johnnymillergh/MaterialLibrary/master/data-structures-and-algorithms/data-structures-and-algorithms-social-image.png" alt="Media Streaming Social Image"/>
-  <div style="position: absolute; top: 34%; left: 34%; transform: translate(-50%, -50%); color: rgb(7, 156, 58); font-size: 60px; font-weight: bolder;">
+  <img src="https://raw.githubusercontent.com/johnnymillergh/MaterialLibrary/master/media-streaming/media-streaming-social-image.png" alt="Media Streaming Social Image"/>
+  <!--<div style="position: absolute; top: 34%; left: 34%; transform: translate(-50%, -50%); color: rgb(7, 156, 58); font-size: 60px; font-weight: bolder;">
     Media Streaming<br>
     Spring Boot Starter
-  </div>
+  </div>-->
 </div>
 
 [![GitHub release](https://img.shields.io/github/release/johnnymillergh/media-streaming.svg)](https://github.com/johnnymillergh/media-streaming/releases)
@@ -35,7 +35,7 @@ Here is the highlights of **Media Streaming**:
 
 ## Installation
 
-The easiest way is to install the library via its [Maven package](http://search.maven.org/#search|gav|1|g%3A"com.drewnoakes" AND a%3A"metadata-extractor").
+The easiest way is to install the library via its [GitHub Maven package](https://github.com/johnnymillergh?tab=packages&repo_name=media-streaming).
 
 ```xml
 <dependency>
