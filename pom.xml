@@ -13,7 +13,6 @@
     <packaging>pom</packaging>
     <properties>
         <java.version>11</java.version>
-        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
     </properties>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -21,36 +20,6 @@
         <version>2.3.4.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-
-    <!-- More Project Information -->
-    <url>https://github.com/johnnymillergh/media-streaming</url>
-    <inceptionYear>2020</inceptionYear>
-    <licenses>
-        <license>
-            <name>Apache License, Version 2.0</name>
-            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
-        </license>
-    </licenses>
-    <organization>
-        <name>JM Software, Inc.</name>
-        <url>https://github.com/johnnymillergh</url>
-    </organization>
-    <developers>
-        <developer>
-            <name>Johnny Miller (锺俊)</name>
-            <email>johnnysviva@outlook.com</email>
-            <url>https://www.linkedin.com/in/ijohnnymiller</url>
-            <organization>JM Software, Inc.</organization>
-            <organizationUrl>https://github.com/johnnymillergh</organizationUrl>
-            <timezone>8</timezone>
-        </developer>
-    </developers>
-
-    <!-- VCS Settings -->
-    <issueManagement>
-        <system>GitHub</system>
-        <url>https://github.com/johnnymillergh/exrx-net-crawler-server/issues</url>
-    </issueManagement>
 
     <modules>
         <module>media-streaming-spring-boot-autoconfigure</module>
@@ -78,6 +47,58 @@
         </dependencies>
     </dependencyManagement>
 
+    <!-- More Project Information -->
+    <url>https://github.com/johnnymillergh/media-streaming</url>
+    <inceptionYear>2020</inceptionYear>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <organization>
+        <name>JM Software, Inc.</name>
+        <url>https://github.com/johnnymillergh</url>
+    </organization>
+    <developers>
+        <developer>
+            <name>Johnny Miller (锺俊)</name>
+            <email>johnnysviva@outlook.com</email>
+            <url>https://www.linkedin.com/in/ijohnnymiller</url>
+            <organization>JM Software, Inc.</organization>
+            <organizationUrl>https://github.com/johnnymillergh</organizationUrl>
+            <timezone>8</timezone>
+        </developer>
+    </developers>
+
+    <!-- VCS Settings -->
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/johnnymillergh/media-streaming/issues</url>
+    </issueManagement>
+    <scm>
+        <connection>scm:git:git@github.com:johnnymillergh/media-streaming.git</connection>
+        <developerConnection>scm:git:git@github.com:johnnymillergh/media-streaming.git</developerConnection>
+        <url>https://github.com/johnnymillergh/media-streaming</url>
+    </scm>
+
+    <distributionManagement>
+        <repository>
+            <!-- The id must be the same as global sonatype_releases id -->
+            <id>sonatype_releases</id>
+            <name>Nexus Release Repository</name>
+            <!-- 这里就是在创建issue成功后，对方回复的release发布地址-->
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+        <snapshotRepository>
+            <!-- The id must be the same as global sonatype_snapshots id -->
+            <id>sonatype_snapshots</id>
+            <name>Nexus Snapshot Repository</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <!-- Build Settings -->
     <build>
         <plugins>
@@ -87,19 +108,6 @@
                 <configuration>
                     <skip>true</skip>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${maven-javadoc-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <!-- The Versions Plugin updates the versions of components in the POM. -->
             <plugin>
@@ -112,16 +120,60 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven-javadoc-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.8</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>sonatype_releases</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
-
-    <distributionManagement>
-        <repository>
-            <id>github</id>
-            <name>GitHub OWNER Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/johnnymillergh/media-streaming</url>
-        </repository>
-    </distributionManagement>
 
     <!-- Global Dependencies -->
     <dependencies>
