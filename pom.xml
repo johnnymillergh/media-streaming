@@ -84,19 +84,18 @@
     </scm>
 
     <distributionManagement>
-        <repository>
-            <!-- The id must be the same as global sonatype_releases id -->
-            <id>sonatype_releases</id>
-            <name>Nexus Release Repository</name>
-            <!-- 这里就是在创建issue成功后，对方回复的release发布地址-->
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
-        </repository>
         <snapshotRepository>
             <!-- The id must be the same as global sonatype_snapshots id -->
-            <id>sonatype_snapshots</id>
+            <id>ossrh</id>
             <name>Nexus Snapshot Repository</name>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
+        <repository>
+            <!-- The id must be the same as global sonatype_releases id -->
+            <id>ossrh</id>
+            <name>Nexus Release Repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
     </distributionManagement>
 
     <!-- Build Settings -->
@@ -153,9 +152,9 @@
                 <version>1.6.8</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <serverId>sonatype_releases</serverId>
+                    <serverId>ossrh</serverId>
                     <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
             </plugin>
             <plugin>
