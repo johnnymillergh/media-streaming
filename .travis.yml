@@ -2,27 +2,59 @@
 # https://docs.travis-ci.com/user/languages/java/
 language: java
 
+# https://docs.travis-ci.com/user/multi-os/
+os: linux
+
 # We can specify a list of JDKs to be used for testing. A list of available JDKs in Trusty can be seed in:
 # https://docs.travis-ci.com/user/reference/trusty/#jvm-clojure-groovy-java-scala-images
 jdk: oraclejdk11
 
-# Each job in Travis CI has several steps:
-# https://docs.travis-ci.com/user/job-lifecycle/
-# The 'language: java' directive sets up sane defaults to test common java applications.
-# We customize the script for compiling Maven application. For more about customizing the build:
-# https://docs.travis-ci.com/user/customizing-the-build
-script:
-  - ./mvnw install -Dmaven.javadoc.skip=true -B -V
+# https://docs.travis-ci.com/user/job-lifecycle#skipping-the-installation-phase
+install: skip
 
-before_install:
+# To prevent error like:
+# xxx.sh: Permission denied
+before_script:
+  - chmod +x .travis/install.sh
+  - chmod +x .travis/deploy.sh
   - chmod +x mvnw
 
-# This is to enable Codecov's coverage. If the build is successful, the code is submitted for code coverage analysis.
-#after_success:
-#  - bash <(curl -s https://codecov.io/bash)
+# Custom Maven install script:
+# https://docs.travis-ci.com/user/job-lifecycle/
+# https://docs.travis-ci.com/user/customizing-the-build
+script:
+  - "./.travis/install.sh"
+
+# Decrypt file `gpg.asc.enc` before deployment
+# https://docs.travis-ci.com/user/encrypting-files/
+before_deploy:
+  - openssl aes-256-cbc -K $encrypted_4f0d00631887_key -iv $encrypted_4f0d00631887_iv -in .travis/gpg.asc.enc -out .travis/gpg.asc -d
+
+deploy:
+  - skip_cleanup: true
+    provider: script
+    script: ./.travis/deploy.sh
+    on:
+      branch:
+        - master
+        - feature/**
+  - skip_cleanup: true
+    provider: script
+    script: ./.travis/deploy.sh
+    on:
+      tags: true
 
 # https://docs.travis-ci.com/user/notifications#default-notification-settings
 notifications:
   email:
     on_success: change
     on_failure: always
+
+# https://docs.travis-ci.com/user/environment-variables/
+# https://docs.travis-ci.com/user/encryption-keys#usage
+env:
+  global:
+    - secure: "DwQw/xajbyrBUpx0/TBmAsUArKn08Ko0ncHWKp5vF+Y09gGWuLSRrkOUURXU5zsakewGnwgwSl72NCH1wrgjNUpL0v0Btgkfpbaz1PW5oOPCfgcoY4gCBBp5kCwUg2ONErgyoRN/ePPN1pYK/LVKlockunT+8cffiK1DkjH8yx6izk0ZmkWwdP1ZULlFL0VnFR2wIUY9cosCjY2rddd3iBBk9UjcTXiCgu3nUL/qMZJBd1TUNEIDUCINK4RUkkOBqfzsXZR4ydUjYCGkb/Ul3FkNzs+mFpzTTtKl4qYbVSfcv6Yn5oUz7EXNcELYMSQ+yiGEdRWQx3iLxEU/lGjSe2dgPH6RbNPa4QEj/nndvLiiMBoxlzzqKfaDSCao4taby6uzfyEAipqicDIA9pVA6u7ILKebKX6DJVBh7QBlMPv5JTs7Ghd5QrkzIsXmq0P+dt2PztK+5JX6g7ytPGvN8oZ76dc1IF2t7E1pZSIMAw7rQBL1dyYXPtpQwrRIs0vF8C4vL2XI3utz/7V6JB6ao80Svk6D7O+wSDUN/qX8u/krV2SjOv5GKvk6M6MvzC/JSSn+xw18SrEaCMrTZcNuFCfkuyMJUkCsEm/qDU8fmIfcIRWyOKtaySyGrAfJI0qDDLc+GlPdka/fWCcG3e/BxkoyHLSG+3NLJTnLkUBtGZE="
+    - secure: "HGBiKhMbdj28wGxCzyGcWOUC9AxvkwhXrSxotySM+xBEVIm161U5uuC0El4/A3qU0feSRav+kA9xnte48QZUZc1yc4sdtT0J5rspZgx+4VGgNVjI+AUsrgbbcjZmk78GI2i0lXPIMXtyTzknriglruu2E+Ov7znDnWqiSUsWeaWA0QdTLWNFPONrsR2tgYGvzXhuVzONAVqucyvwZy/9WsnGOvJ3wlMbv8TKgsgfl/ntN2rijf7tzVVdefdRt9T5e9EJkTOJDvaUbbTOW7rBkM/WyrZxgbXsYmzi2Icg2o/h7pkT/+iZ/2MQYnDGJY3hRmRzHPKbAB90nVC0VQ42s9QL6gKWNTLAvM92/DhXu6anmowNEaLQGAYVIvPSngY16Nio0ZoJimVWPjb1dQ9l6vMY9+CJUlKW3LVTeqAfZ+6RW4COxNXoULEU7LlIExP8axtm0hl/mp0tv8IO/vuZs0/10g2s0cBw4ztWGg4FSGSgzpj5b6ezQCdS7jhhheLyws+rs2y0zOme7CU3ZqlwDwYnIyWpBcn0Za0OFObo4N0JX6CeuQBBf8bFLZJhMKVBfLTlVg3fcIPO5TybBUNsOhzsvURe9RDj/phDOwfxZNL9Plm0SOfX9lzeuQDFCurpt5zlhdXWmYlTX7zp2aRbAYV+BWlz2fd23Ujqn0RL2mo="
+    - secure: "OmBHPARnSc3XBK2HmjqurypOZMdNJOT2p3UHk/fHIA5YThvMI/EXJfT+3mAgvK5sCXOXBARKr1bVp+gAFZbCCj964czUKP0Dqp87fxDok4tpejgnbdBFF3asQB2r4t1b1ZlUOKhAVQIPZGIqnSbD3jvMxcGD5DTCu7F/2sIue02OV7X+P1rFujL9EYyPG7LdOie+54+9njZZ3Vz1NhPOpOf6xoWsKFjUTaN+qpYDoMAruN3LG3ZrIxLnkjlbfrIjkmO/XP1CUnenDT63sBx3Ub7DQyvCXppunmxCAA9HTfkIRzprcyGiIr8hAo585TUKZlCUlRyg5BbfZ5X1J+YYmi6vVgvOSAzcUkHTmbGB/zAiBylA37v4Dl6OHOf98SDgm5bpQUCVTScmVumKFMCpe135hN8pWK7xrQUUpku9BsK9TTXy5vMPOTFmG2oUrsjzoF870+ZudD5we8eDl5FaZt8EW5qH230AIz2OqygtRm4TESa3pbFdZ7G6zyf9W5aLFoBBtBRJW+ks2KDtWRhimF6dAVVsW9XZ6jdLL89LE7kztkc7QffuYN5aCWGGueg67WHoI1PbWFe2zub2e3ZAHE/WVZu5bUzOhF0VbS6HBHBPyUr2u23NaDiTofKkVwUpUi0Ts5J9b08cfuTANmOpGPZdfzxJ4rCY/Uy7uq4JopM="
+    - secure: "bZCSd5Bq7Cicoe8tqoLpK2JYKNfqy11+kh1FxFsMAduv5ul2kH5jaLum1rK6oN9+wYdAWBaVR68L2atvc9VkJBvbS4E+/tHP6btwy9J+ESfgYanG2WCNMGqa8WpF2zlwDXm7BEgTgKk5WzgZQU6sI7JQ62M4zgw8dW/z0WeKIVFtbBEHO9E2COP70gV/3ixdYitsYoNTrUWO8TJ1hNvt4xNRrzYzaBqib8KFFOKUfwzbxpbsGq4LcDiUKmB8R/WK9BNpx10z9iIyFKq/Gsz0IGNEPlA1Dyry4AmK7vdToZivOaJw+xMkSJcl7MjDaLuy53lmz2uEQawDTxiqii7tewzNNafV/rPawb2fVJ4ccZajIsUgiFf8mKUjutzO3xDslJgxx7ht+Epf7hfZOGMawasTL/JJHozQ+f90SvhT8Wf2cyjyfaKiwIUeN6SfJVAU/5aW/RhljEwuWG+SfUhitvB46KPvmwcyADv/7xau46YZnyEXOIGmbfOuxZxqXoyCeQ6QvFQ5bTl0F6vOd3OtyTU64saHBEFSr+rP+OIdeJ1TB5SSCRf8zSaEqq922MrLf0zETNStjH8F2eF7XPNMUp5QKe587Ue2LNQrd+cUc6NcDDU8m4Rxjz+MSaYYv8b9gjQytr0C6Gl9eAX5oligxQ3kR/w9P9khcz7TZDoIs4M="
