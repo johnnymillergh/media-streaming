@@ -1,3 +1,27 @@
+# [1.2.0](https://github.com/johnnymillergh/media-streaming/compare/v1.1.1...1.2.0) (2020-10-22)
+
+
+### Build System
+
+* **POM:** update POM (except groupId and package) for sonatype ([4c40ad9](https://github.com/johnnymillergh/media-streaming/commit/4c40ad96c7a51acd6c9f317f9c33847aabf62410))
+* **Project:** change `groupId` and package name ([cbb793d](https://github.com/johnnymillergh/media-streaming/commit/cbb793dc81281745c06b73a7e7e7cdcea388e7b7))
+* **Travis:** update Travis CI process ([fde74b4](https://github.com/johnnymillergh/media-streaming/commit/fde74b476593747db879b4db2e3ea545458a6f69))
+
+
+### Performance Improvements
+
+* **media-streaming:** release resources when shutdown ([44a54cc](https://github.com/johnnymillergh/media-streaming/commit/44a54cc4cd5b3f859c7cfb451ddf9db3a87dffca))
+* **sample-app:** enable graceful shutdown ([58f423c](https://github.com/johnnymillergh/media-streaming/commit/58f423c5aa414dc87a965ad7fe6934a17c02cf60))
+
+
+### BREAKING CHANGES
+
+* **Travis:** deploy artifact based on Travis CI
+* **Project:** change `groupId` and package name
+* **POM:** update POM (except groupId and package) for sonatype
+
+
+
 ## 1.1.1 (2020-10-20)
 
 * fix(README): correct README.md ([4d568b0](https://github.com/johnnymillergh/media-streaming/commit/4d568b0))

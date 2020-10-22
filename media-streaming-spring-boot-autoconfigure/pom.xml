@@ -3,9 +3,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.jmframework.boot</groupId>
+        <groupId>com.github.johnnymillergh.boot</groupId>
         <artifactId>media-streaming</artifactId>
-        <version>1.1.1</version>
+        <version>1.2.0</version>
     </parent>
     <artifactId>media-streaming-spring-boot-autoconfigure</artifactId>
     <name>Media Streaming :: Spring Boot Autoconfigure</name>

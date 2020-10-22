@@ -1,7 +1,10 @@
 media-streaming:
-  video-directory-on-file-system: 'C:\\Users\\Johnny\\Videos\\Mine'
+  video-directory-on-file-system: '/Users/johnny/Movies/Mine'
 
 # Configure logging level of Media Streaming
 logging:
   level:
-    com.jmframework.boot.mediastreamingspringbootautoconfigure: DEBUG
+    com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure: DEBUG
+
+server:
+  shutdown: graceful

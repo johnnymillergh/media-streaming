@@ -3,11 +3,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.jmframework.boot</groupId>
+        <groupId>com.github.johnnymillergh.boot</groupId>
         <artifactId>media-streaming</artifactId>
-        <version>1.1.1</version>
+        <version>1.2.0</version>
     </parent>
-    <groupId>com.jmsoftware.boot</groupId>
     <artifactId>media-streaming-sample-app</artifactId>
     <name>Media Streaming :: Sample App</name>
     <description>Media Streaming :: Sample App</description>
@@ -20,7 +19,7 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>-->
         <dependency>
-            <groupId>com.jmframework.boot</groupId>
+            <groupId>com.github.johnnymillergh.boot</groupId>
             <artifactId>media-streaming-spring-boot-starter</artifactId>
         </dependency>
 

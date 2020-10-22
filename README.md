@@ -1,14 +1,14 @@
 <div style="position: relative; text-align: center;">
-  <img src="https://raw.githubusercontent.com/johnnymillergh/MaterialLibrary/master/data-structures-and-algorithms/data-structures-and-algorithms-social-image.png" alt="Media Streaming Social Image"/>
-  <div style="position: absolute; top: 34%; left: 34%; transform: translate(-50%, -50%); color: rgb(7, 156, 58); font-size: 60px; font-weight: bolder;">
+  <img src="https://raw.githubusercontent.com/johnnymillergh/MaterialLibrary/master/media-streaming/media-streaming-social-image.png" alt="Media Streaming Social Image"/>
+  <!--<div style="position: absolute; top: 34%; left: 34%; transform: translate(-50%, -50%); color: rgb(7, 156, 58); font-size: 60px; font-weight: bolder;">
     Media Streaming<br>
     Spring Boot Starter
-  </div>
+  </div>-->
 </div>
 
 [![GitHub release](https://img.shields.io/github/release/johnnymillergh/media-streaming.svg)](https://github.com/johnnymillergh/media-streaming/releases)
 [![Build Status](https://travis-ci.com/johnnymillergh/media-streaming.svg?branch=master)](https://travis-ci.com/johnnymillergh/media-streaming)
-[![Maven Package](https://github.com/johnnymillergh/media-streaming/workflows/Maven%20Package/badge.svg?branch=master)](https://github.com/johnnymillergh?tab=packages&repo_name=media-streaming)
+[![Media Streaming](https://maven-badges.herokuapp.com/maven-central/com.github.johnnymillergh.boot/media-streaming-spring-boot-starter/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.johnnymillergh.boot/media-streaming-spring-boot-starter/)
 [![GitHub issues](https://img.shields.io/github/issues/johnnymillergh/media-streaming)](https://github.com/johnnymillergh/media-streaming/issues)
 [![GitHub forks](https://img.shields.io/github/forks/johnnymillergh/media-streaming)](https://github.com/johnnymillergh/media-streaming/network)
 [![GitHub stars](https://img.shields.io/github/stars/johnnymillergh/media-streaming)](https://github.com/johnnymillergh/media-streaming)
@@ -35,13 +35,13 @@ Here is the highlights of **Media Streaming**:
 
 ## Installation
 
-The easiest way is to install the library via its [Maven package](http://search.maven.org/#search|gav|1|g%3A"com.drewnoakes" AND a%3A"metadata-extractor").
+The easiest way is to install the library via [Nexus Repository Manager](https://oss.sonatype.org/#nexus-search;gav~com.github.johnnymillergh.boot~media-streaming-spring-boot-starter~~~).
 
 ```xml
 <dependency>
-  <groupId>com.jmframework.boot</groupId>
+  <groupId>com.github.johnnymillergh.boot</groupId>
   <artifactId>media-streaming-spring-boot-starter</artifactId>
-  <version>1.0.1</version>
+  <version>1.2.0-SNAPSHOT</version>
 </dependency>
 ```
 

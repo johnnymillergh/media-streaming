@@ -5,15 +5,14 @@
     <!-- POM Reference https://maven.apache.org/pom.html -->
 
     <!-- Project Basics -->
-    <groupId>com.jmframework.boot</groupId>
+    <groupId>com.github.johnnymillergh.boot</groupId>
     <artifactId>media-streaming</artifactId>
-    <version>1.1.1</version>
+    <version>1.2.0</version>
     <name>Media Steaming</name>
     <description>Media Streaming for Java</description>
     <packaging>pom</packaging>
     <properties>
         <java.version>11</java.version>
-        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
     </properties>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -22,6 +21,32 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
+    <modules>
+        <module>media-streaming-spring-boot-autoconfigure</module>
+        <module>media-streaming-spring-boot-starter</module>
+        <module>media-streaming-sample-app</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.github.johnnymillergh.boot</groupId>
+                <artifactId>media-streaming-spring-boot-autoconfigure</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.johnnymillergh.boot</groupId>
+                <artifactId>media-streaming-spring-boot-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.johnnymillergh.boot</groupId>
+                <artifactId>media-streaming-sample-app</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <!-- More Project Information -->
     <url>https://github.com/johnnymillergh/media-streaming</url>
     <inceptionYear>2020</inceptionYear>
@@ -29,6 +54,7 @@
         <license>
             <name>Apache License, Version 2.0</name>
             <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+            <distribution>repo</distribution>
         </license>
     </licenses>
     <organization>
@@ -49,34 +75,28 @@
     <!-- VCS Settings -->
     <issueManagement>
         <system>GitHub</system>
-        <url>https://github.com/johnnymillergh/exrx-net-crawler-server/issues</url>
+        <url>https://github.com/johnnymillergh/media-streaming/issues</url>
     </issueManagement>
+    <scm>
+        <connection>scm:git:git@github.com:johnnymillergh/media-streaming.git</connection>
+        <developerConnection>scm:git:git@github.com:johnnymillergh/media-streaming.git</developerConnection>
+        <url>https://github.com/johnnymillergh/media-streaming</url>
+    </scm>
 
-    <modules>
-        <module>media-streaming-spring-boot-autoconfigure</module>
-        <module>media-streaming-spring-boot-starter</module>
-        <module>media-streaming-sample-app</module>
-    </modules>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>com.jmframework.boot</groupId>
-                <artifactId>media-streaming-spring-boot-autoconfigure</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.jmframework.boot</groupId>
-                <artifactId>media-streaming-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.jmsoftware.boot</groupId>
-                <artifactId>media-streaming-sample-app</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+    <distributionManagement>
+        <snapshotRepository>
+            <!-- The id must be the same as global sonatype_snapshots id -->
+            <id>ossrh</id>
+            <name>Nexus Snapshot Repository</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <!-- The id must be the same as global sonatype_releases id -->
+            <id>ossrh</id>
+            <name>Nexus Release Repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+    </distributionManagement>
 
     <!-- Build Settings -->
     <build>
@@ -87,19 +107,6 @@
                 <configuration>
                     <skip>true</skip>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${maven-javadoc-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <!-- The Versions Plugin updates the versions of components in the POM. -->
             <plugin>
@@ -112,16 +119,60 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven-javadoc-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.8</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
-
-    <distributionManagement>
-        <repository>
-            <id>github</id>
-            <name>GitHub OWNER Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/johnnymillergh/media-streaming</url>
-        </repository>
-    </distributionManagement>
 
     <!-- Global Dependencies -->
     <dependencies>
