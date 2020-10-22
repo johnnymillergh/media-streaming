@@ -2,6 +2,9 @@
 # https://docs.travis-ci.com/user/languages/java/
 language: java
 
+# https://docs.travis-ci.com/user/multi-os/
+os: linux
+
 # We can specify a list of JDKs to be used for testing. A list of available JDKs in Trusty can be seed in:
 # https://docs.travis-ci.com/user/reference/trusty/#jvm-clojure-groovy-java-scala-images
 jdk: oraclejdk11
@@ -22,6 +25,8 @@ before_script:
 script:
   - "./install.sh"
 
+# Decrypt file `gpg.asc.enc` before deployment
+# https://docs.travis-ci.com/user/encrypting-files/
 before_deploy:
   - openssl aes-256-cbc -K $encrypted_4f0d00631887_key -iv $encrypted_4f0d00631887_iv
     -in .travis/gpg.asc.enc -out .travis/gpg.asc -d
@@ -31,7 +36,9 @@ deploy:
     provider: script
     script: ./deploy.sh
     on:
-      branch: master
+      branch:
+        - master
+        - feature/**
   - skip_cleanup: true
     provider: script
     script: ./deploy.sh
@@ -46,7 +53,6 @@ notifications:
 
 # https://docs.travis-ci.com/user/environment-variables/
 # https://docs.travis-ci.com/user/encryption-keys#usage
-# https://docs.travis-ci.com/user/encrypting-files/
 env:
   global:
     - secure: "EcN7//MxH2sPb0sC4xIDRXbo0/qU7KSir+zBZeXQdyGm1GO9FZJQyLt4gCRabUk8603WPAgBWWAHyeBSnOvQATZ/+4p+qpWmJE0+qZXV3V8WGsS9MoavV5HHxd8kU4T4Un/BdL/2SEmlGml8hQrLYFK+gup8sKZ2txou5/NINK3kqriZIBX8vN/hsz5FJDXgee1Sd1/rkuziFQ3Z8edkDnO+ija2/cbze2j28Cp7zGhBeo7QkvkIU0ngCloXcWNnQvhwjBxKNSZMx25MFI6Mv6r5uWtP4p5W/oVMVzgPWNPD45wWAdKzGgDGzv0dQl/aNJDYdZGZPYGNKDRvmrhGKeuZNOd+P7qXPwoJhKCNz/itcgGGizY3pAnIusORCMgmWVNRp5orviMTlneOBEY4jh1+aCz3PAXMVU+9zHV5UvINS4SlmdMGSJRo2UUfQvNyDHgvl1heTBPif3ykAkkzVIf3cLB1nPjBzEpNU38QAcRMZyGZ2HNMGDuGkvAag1zFQ5FKY6GXfubxLPvCgbH7BEjhW7hZcxcT5ynxc0bPRIUk2ab2IaBmJX/+2Ltl0vBcxusuM95LdyQnp+A/G/nf19Go6La0cQ3eWv7leBY1egJF80f538IjF2gCCdW3Nr6ptTgVHaccmORL5qtNofrEzxjk9ZGsCHuE1cydXurCwJw="
