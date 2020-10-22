@@ -23,7 +23,7 @@ before_script:
 # https://docs.travis-ci.com/user/job-lifecycle/
 # https://docs.travis-ci.com/user/customizing-the-build
 script:
-  - "./install.sh"
+  - "./.travis/install.sh"
 
 # Decrypt file `gpg.asc.enc` before deployment
 # https://docs.travis-ci.com/user/encrypting-files/
@@ -33,14 +33,14 @@ before_deploy:
 deploy:
   - skip_cleanup: true
     provider: script
-    script: ./deploy.sh
+    script: ./.travis/deploy.sh
     on:
       branch:
         - master
         - feature/**
   - skip_cleanup: true
     provider: script
-    script: ./deploy.sh
+    script: ./.travis/deploy.sh
     on:
       tags: true
 
