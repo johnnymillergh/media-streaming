@@ -31,7 +31,7 @@ if [ -z "$GPG_PASSPHRASE" ]; then
 fi
 
 # If file .travis/gpg.asc not exists
-if [ ! -f .travis/gpg.asc ]; then
+if [ ! -f "${TRAVIS_BUILD_DIR}/.travis/gpg.asc" ]; then
   echo "[Deployment ERROR] Missing environment value: GPG_PASSPHRASE" >&2
   exit 1
 fi
@@ -42,10 +42,10 @@ gpg --fast-import .travis/gpg.asc
 
 # If `TRAVIS_TAG` string is not empty
 if [ -n "$TRAVIS_TAG" ]; then
-  echo "On a tag -> set pom.xml <version> to $TRAVIS_TAG"
+  echo "Maven deploy on a tag -> set pom.xml <version> to $TRAVIS_TAG"
   mvn --settings "${TRAVIS_BUILD_DIR}/.travis/mvn-settings.xml" org.codehaus.mojo:versions-maven-plugin:2.7:set -DnewVersion=$TRAVIS_TAG 1>/dev/null 2>/dev/null
 else
-  echo "Not on a tag -> keep snapshot version in pom.xml"
+  echo "Maven deploy not on a tag -> keep snapshot version in pom.xml"
 fi
 
 # Run the maven deploy steps

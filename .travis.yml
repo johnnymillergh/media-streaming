@@ -28,7 +28,7 @@ script:
 # Decrypt file `gpg.asc.enc` before deployment
 # https://docs.travis-ci.com/user/encrypting-files/
 before_deploy:
-  - openssl aes-256-cbc -K $encrypted_0b849b95243d_key -iv $encrypted_0b849b95243d_iv -in .travis/gpg.asc.enc -out .travis/gpg.asc -d
+  - openssl aes-256-cbc -K $encrypted_4f0d00631887_key -iv $encrypted_4f0d00631887_iv -in .travis/gpg.asc.enc -out .travis/gpg.asc -d
 
 deploy:
   - skip_cleanup: true
