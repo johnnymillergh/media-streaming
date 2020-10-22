@@ -43,10 +43,10 @@ gpg --fast-import .travis/gpg.asc
 # If `TRAVIS_TAG` string is not empty
 if [ -n "$TRAVIS_TAG" ]; then
   echo "Maven deploy on a tag -> set pom.xml <version> to $TRAVIS_TAG"
-  mvn --settings "${TRAVIS_BUILD_DIR}/.travis/mvn-settings.xml" org.codehaus.mojo:versions-maven-plugin:2.7:set -DnewVersion=$TRAVIS_TAG 1>/dev/null 2>/dev/null
+  mvn --settings "${TRAVIS_BUILD_DIR}/.travis/maven-settings.xml" org.codehaus.mojo:versions-maven-plugin:2.7:set -DnewVersion=$TRAVIS_TAG 1>/dev/null 2>/dev/null
 else
   echo "Maven deploy not on a tag -> keep snapshot version in pom.xml"
 fi
 
 # Run the maven deploy steps
-mvn deploy -P publish -DskipTests=true --settings "${TRAVIS_BUILD_DIR}/.travis/mvn-settings.xml"
+mvn deploy -P publish -DskipTests=true --settings "${TRAVIS_BUILD_DIR}/.travis/maven-settings.xml"
