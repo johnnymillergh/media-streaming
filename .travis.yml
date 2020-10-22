@@ -12,13 +12,11 @@ install: skip
 before_script:
   - chmod +x mvnw
 
-# Each job in Travis CI has several steps:
+# Custom Maven install script:
 # https://docs.travis-ci.com/user/job-lifecycle/
-# The 'language: java' directive sets up sane defaults to test common java applications.
-# We customize the script for compiling Maven application. For more about customizing the build:
 # https://docs.travis-ci.com/user/customizing-the-build
 script:
-  - "./mvnw clean install -Dmaven.javadoc.skip=true -B -V"
+  - "./install.sh"
 
 before_deploy:
   - openssl aes-256-cbc -K $encrypted_4f0d00631887_key -iv $encrypted_4f0d00631887_iv
