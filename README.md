@@ -8,7 +8,7 @@
 
 [![GitHub release](https://img.shields.io/github/release/johnnymillergh/media-streaming.svg)](https://github.com/johnnymillergh/media-streaming/releases)
 [![Build Status](https://travis-ci.com/johnnymillergh/media-streaming.svg?branch=master)](https://travis-ci.com/johnnymillergh/media-streaming)
-[![Maven Package](https://github.com/johnnymillergh/media-streaming/workflows/Maven%20Package/badge.svg?branch=master)](https://github.com/johnnymillergh?tab=packages&repo_name=media-streaming)
+[![Media Streaming](https://maven-badges.herokuapp.com/maven-central/com.github.johnnymillergh.boot/media-streaming-spring-boot-starter/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.johnnymillergh.boot/media-streaming-spring-boot-starter/)
 [![GitHub issues](https://img.shields.io/github/issues/johnnymillergh/media-streaming)](https://github.com/johnnymillergh/media-streaming/issues)
 [![GitHub forks](https://img.shields.io/github/forks/johnnymillergh/media-streaming)](https://github.com/johnnymillergh/media-streaming/network)
 [![GitHub stars](https://img.shields.io/github/stars/johnnymillergh/media-streaming)](https://github.com/johnnymillergh/media-streaming)
@@ -35,13 +35,13 @@ Here is the highlights of **Media Streaming**:
 
 ## Installation
 
-The easiest way is to install the library via its [GitHub Maven package](https://github.com/johnnymillergh?tab=packages&repo_name=media-streaming).
+The easiest way is to install the library via [Nexus Repository Manager](https://oss.sonatype.org/#nexus-search;gav~com.github.johnnymillergh.boot~media-streaming-spring-boot-starter~~~).
 
 ```xml
 <dependency>
   <groupId>com.github.johnnymillergh.boot</groupId>
   <artifactId>media-streaming-spring-boot-starter</artifactId>
-  <version>1.0.1</version>
+  <version>1.2.0-SNAPSHOT</version>
 </dependency>
 ```
 
