@@ -9,8 +9,12 @@ jdk: oraclejdk11
 # https://docs.travis-ci.com/user/job-lifecycle#skipping-the-installation-phase
 install: skip
 
+# To prevent error like:
+# xxx.sh: Permission denied
 before_script:
+  - chmod +x install.sh
   - chmod +x mvnw
+  - chmod +x deploy.sh
 
 # Custom Maven install script:
 # https://docs.travis-ci.com/user/job-lifecycle/
