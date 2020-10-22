@@ -36,8 +36,9 @@ deploy:
     script: ./.travis/deploy.sh
     on:
       branch:
-        - master
         - feature/**
+        - release/**
+        - hotfix/**
   - skip_cleanup: true
     provider: script
     script: ./.travis/deploy.sh
