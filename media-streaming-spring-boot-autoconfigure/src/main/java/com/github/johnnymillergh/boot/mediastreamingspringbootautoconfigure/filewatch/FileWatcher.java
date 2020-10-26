@@ -48,7 +48,13 @@ public class FileWatcher {
         log.debug("Started watching: {}", this.monitoredPath);
         while (true) {
             // wait for key to be signaled
-            Optional<WatchKey> optionalWatchKey = Optional.ofNullable(WatchServiceSingleton.getInstance().poll());
+            Optional<WatchKey> optionalWatchKey;
+            try {
+                optionalWatchKey = Optional.ofNullable(WatchServiceSingleton.getInstance().poll());
+            } catch (ClosedWatchServiceException e) {
+                log.error("Detected closed WatchService.", e);
+                return;
+            }
             if (optionalWatchKey.isPresent()) {
                 var watchKey = optionalWatchKey.get();
                 for (var watchEvent : watchKey.pollEvents()) {
