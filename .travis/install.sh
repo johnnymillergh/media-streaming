@@ -8,7 +8,10 @@ CURRENT_DIR=$(pwd)
 echo "[INSTALL] INFO CURRENT_DIR: $CURRENT_DIR"
 command "ls"
 
-INSTALL_COMMAND_RESULT=$(./mvnw clean install -Dmaven.javadoc.skip=true -Dgpg.skip=true --quiet --batch-mode --show-version)
+# Run the Maven clean install
+./mvnw clean install -Dmaven.javadoc.skip=true -Dgpg.skip=true --quiet --batch-mode --show-version
+
+INSTALL_COMMAND_RESULT=$?
 
 if [ "$INSTALL_COMMAND_RESULT" -eq 0 ]; then
   echo "[INSTALL] INFO Installation succeed. INSTALL_COMMAND_RESULT: $INSTALL_COMMAND_RESULT"
