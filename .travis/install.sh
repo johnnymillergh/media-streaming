@@ -5,14 +5,14 @@
 set -e
 
 ########################## Functions Import ##########################
-source ./commond.sh
+source ./.travis/common.sh
 
 CURRENT_DIR=$(pwd)
 printInfo "[INSTALL] CURRENT_DIR: $CURRENT_DIR"
 command "ls"
 
 # Run the Maven clean install
-./mvnw clean install -Dmaven.javadoc.skip=true -Dgpg.skip=true --quiet --batch-mode --show-version
+.mvnw clean install -Dmaven.javadoc.skip=true -Dgpg.skip=true --quiet --batch-mode --show-version
 
 INSTALL_COMMAND_RESULT=$?
 

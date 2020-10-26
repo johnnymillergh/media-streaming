@@ -12,7 +12,7 @@
 set -e
 
 ########################## Functions Import ##########################
-source ./commond.sh
+source common.sh
 
 # Check the variables are set
 if [ -z "$OSSRH_USERNAME" ]; then
