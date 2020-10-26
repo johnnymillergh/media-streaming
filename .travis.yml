@@ -12,7 +12,7 @@ jdk: oraclejdk11
 # https://docs.travis-ci.com/user/job-lifecycle#skipping-the-installation-phase
 install: skip
 
-# To prevent error like:
+# Grant execute permission to prevent error like:
 # xxx.sh: Permission denied
 before_script:
   - chmod +x .travis/install.sh
@@ -35,10 +35,8 @@ deploy:
     provider: script
     script: ./.travis/deploy.sh
     on:
-      branch:
-        - feature/**
-        - release/**
-        - hotfix/**
+      all_branches: true
+      condition: $TRAVIS_BRANCH =~ ^(feature|release|hotfix)\/.$
   - skip_cleanup: true
     provider: script
     script: ./.travis/deploy.sh
