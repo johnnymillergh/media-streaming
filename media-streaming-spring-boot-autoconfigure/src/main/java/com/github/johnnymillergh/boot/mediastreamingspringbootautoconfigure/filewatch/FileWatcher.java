@@ -90,6 +90,7 @@ public class FileWatcher {
 
     @SneakyThrows
     public void destroy() {
+        WatchServiceSingleton.close();
         THREAD_POOL.awaitTermination(5, TimeUnit.SECONDS);
         log.debug("THREAD_POOL for FileWatcher was terminated.");
     }

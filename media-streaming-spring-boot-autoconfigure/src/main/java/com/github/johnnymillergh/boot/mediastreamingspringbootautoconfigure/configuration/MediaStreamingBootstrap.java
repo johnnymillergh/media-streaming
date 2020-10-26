@@ -13,6 +13,7 @@ import reactor.core.publisher.Mono;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.nio.file.Path;
+import java.util.Optional;
 
 /**
  * Description: MediaStreamingBootstrap, change description here.
@@ -85,6 +86,6 @@ public class MediaStreamingBootstrap implements CommandLineRunner {
     @PreDestroy
     private void preDestroy() {
         log.debug("Destroying {}, fileWatcher: {}", this.getClass().getSimpleName(), fileWatcher);
-        fileWatcher.destroy();
+        Optional.ofNullable(fileWatcher).ifPresent(FileWatcher::destroy);
     }
 }
