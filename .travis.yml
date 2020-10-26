@@ -15,6 +15,7 @@ install: skip
 # Grant execute permission to prevent error like:
 # xxx.sh: Permission denied
 before_script:
+  - "echo [INSTALL] INFO Grant execute permission"
   - chmod +x .travis/install.sh
   - chmod +x .travis/deploy.sh
   - chmod +x mvnw
@@ -28,6 +29,8 @@ script:
 # Decrypt file `gpg.asc.enc` before deployment
 # https://docs.travis-ci.com/user/encrypting-files/
 before_deploy:
+  - "echo [DEPLOYMENT] INFO TRAVIS_BRANCH: $TRAVIS_BRANCH"
+  - "echo [DEPLOYMENT] INFO TRAVIS_TAG: $TRAVIS_TAG"
   - openssl aes-256-cbc -K $encrypted_4f0d00631887_key -iv $encrypted_4f0d00631887_iv -in .travis/gpg.asc.enc -out .travis/gpg.asc -d
 
 deploy:
@@ -36,7 +39,7 @@ deploy:
     script: ./.travis/deploy.sh
     on:
       all_branches: true
-      condition: $TRAVIS_BRANCH =~ ^(feature|release|hotfix)\/.$
+      condition: $TRAVIS_BRANCH =~ ^(feature|release|hotfix)\/.*$
   - skip_cleanup: true
     provider: script
     script: ./.travis/deploy.sh
