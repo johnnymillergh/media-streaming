@@ -5,6 +5,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.nio.file.Path;
+import java.util.List;
 
 /**
  * Description: VideoRepository, change description here.
@@ -26,6 +27,13 @@ public interface VideoRepository {
      * @return the all videos
      */
     Flux<Video> getAllVideos();
+
+    /**
+     * Gets all video list.
+     *
+     * @return the all videos
+     */
+    List<Video> getAllVideoList();
 
     /**
      * Add video mono.

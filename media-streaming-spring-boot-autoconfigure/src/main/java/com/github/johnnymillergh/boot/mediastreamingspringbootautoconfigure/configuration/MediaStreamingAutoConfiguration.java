@@ -1,5 +1,6 @@
 package com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure.configuration;
 
+import com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure.controller.VideoController;
 import com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure.handler.MediaStreamingExceptionHandler;
 import com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure.handler.VideoRouteHandler;
 import com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure.repository.VideoRepository;
@@ -62,7 +63,7 @@ public class MediaStreamingAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public VideoRouteHandler videoRouteHandler(VideoService videoService, FileService fileService) {
-        return new VideoRouteHandler(videoService, fileService);
+        return new VideoRouteHandler(videoService);
     }
 
     /**
@@ -74,15 +75,22 @@ public class MediaStreamingAutoConfiguration {
      * @return the router function
      */
     @Bean
+    @Deprecated
     @SuppressWarnings("NullableProblems")
     public RouterFunction<ServerResponse> videoEndPoint(VideoRouteHandler videoRouteHandler) {
         log.info("videoEndPoint");
         return route()
                 .nest(path("/videos"), builder -> builder.GET("", videoRouteHandler::listVideos)
                         .nest(path("/{name}"), videoBuilder -> videoBuilder.GET("", param("partial"),
-                                videoRouteHandler::getPartialContent).GET("", videoRouteHandler::getFullContent)
+                                                                                videoRouteHandler::getPartialContent).GET(
+                                "", videoRouteHandler::getFullContent)
                         )
                 ).build();
+    }
+
+    @Bean
+    public VideoController videoController(VideoRepository videoRepository) {
+        return new VideoController(videoRepository);
     }
 
     @Bean

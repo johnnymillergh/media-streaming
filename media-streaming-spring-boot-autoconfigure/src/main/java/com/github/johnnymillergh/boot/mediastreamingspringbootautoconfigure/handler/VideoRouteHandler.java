@@ -1,7 +1,6 @@
 package com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure.handler;
 
 import com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure.model.Video;
-import com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure.services.FileService;
 import com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure.services.VideoService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +23,6 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class VideoRouteHandler {
     private final VideoService videoService;
-    private final FileService fileService;
 
     /**
      * List videos mono.
