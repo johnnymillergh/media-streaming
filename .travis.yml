@@ -15,13 +15,12 @@ install: skip
 # Grant execute permission to prevent error like:
 # xxx.sh: Permission denied
 before_script:
-  - NOW=$(date +%Y-%m-%d' '%H:%M:%S.%N | cut -b 1-23)
-  - echo "$NOW  INFO --- [INSTALL] Grant execute permission"
   - chmod +x .travis/common.sh
+  - source ./.travis/common.sh
+  - "printInfo "[ INSTALL ] Grant execute permission""
   - chmod +x .travis/install.sh
   - chmod +x .travis/deploy.sh
   - chmod +x mvnw
-  - source ./.travis/common.sh
 
 # Custom Maven install script:
 # https://docs.travis-ci.com/user/job-lifecycle/
@@ -32,8 +31,8 @@ script:
 # Decrypt file `gpg.asc.enc` before deployment
 # https://docs.travis-ci.com/user/encrypting-files/
 before_deploy:
-  - "printWarn '[DEPLOY] TRAVIS_BRANCH: $TRAVIS_BRANCH'"
-  - "printWarn '[DEPLOY] TRAVIS_TAG: $TRAVIS_TAG'"
+  - "printWarn "[ DEPLOY ] TRAVIS_BRANCH: $TRAVIS_BRANCH""
+  - "printWarn "[ DEPLOY ] TRAVIS_TAG: $TRAVIS_TAG""
   - openssl aes-256-cbc -K $encrypted_4f0d00631887_key -iv $encrypted_4f0d00631887_iv -in .travis/gpg.asc.enc -out .travis/gpg.asc -d
 
 deploy:
