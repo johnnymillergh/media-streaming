@@ -2,7 +2,7 @@
 
 # Exit immediately if a command exits with a non-zero status.
 # https://stackoverflow.com/questions/19622198/what-does-set-e-mean-in-a-bash-script
-set -e
+# set -e
 
 CURRENT_DIR=$(pwd)
 echo "[INSTALL] INFO CURRENT_DIR: $CURRENT_DIR"
