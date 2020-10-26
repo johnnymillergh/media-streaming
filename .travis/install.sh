@@ -6,11 +6,9 @@ set -e
 
 CURRENT_DIR=$(pwd)
 echo "[INSTALL] INFO CURRENT_DIR: $CURRENT_DIR"
+command "ll"
 
-command "ls"
-command "ls ../"
-
-INSTALL_COMMAND_RESULT=$(./../mvnw clean install -Dmaven.javadoc.skip=true -Dgpg.skip=true --quiet --batch-mode --show-version)
+INSTALL_COMMAND_RESULT=$(./mvnw clean install -Dmaven.javadoc.skip=true -Dgpg.skip=true --quiet --batch-mode --show-version)
 
 if [ "$INSTALL_COMMAND_RESULT" -eq 0 ]; then
   echo "[INSTALL] INFO Installation succeed. INSTALL_COMMAND_RESULT: $INSTALL_COMMAND_RESULT"
