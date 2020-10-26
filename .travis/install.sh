@@ -5,7 +5,7 @@
 set -e
 
 ########################## Functions Import ##########################
-source commond.sh
+source ./commond.sh
 
 CURRENT_DIR=$(pwd)
 printInfo "[INSTALL] CURRENT_DIR: $CURRENT_DIR"
