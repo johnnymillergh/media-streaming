@@ -11,16 +11,16 @@ function now() {
 }
 
 function printInfo() {
-  echo -e "$(now) \e[32m INFO --- $1\e[0m"
+  echo -e "$(now)  \e[32m\e[1mINFO\e[0m\e[32m --- $1\e[0m"
   return 0
 }
 
 function printWarn() {
-  echo -e "$(now) \e[33m WARN --- $1\e[0m"
+  echo -e "$(now)  \e[32m\e[1mWARN\e[0m\e[32m --- $1\e[0m"
   return 0
 }
 
 function printError() {
-  echo -e "$(now) \e[31mERROR --- $1\e[0m"
+  echo -e "$(now) \e[32m\e[1mERROR\e[0m\e[32m --- $1\e[0m"
   return 0
 }
