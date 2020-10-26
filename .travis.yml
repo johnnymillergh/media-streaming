@@ -15,7 +15,8 @@ install: skip
 # Grant execute permission to prevent error like:
 # xxx.sh: Permission denied
 before_script:
-  - "echo [INSTALL] INFO Grant execute permission"
+  - NOW=$(date +%Y-%m-%d' '%H:%M:%S.%N | cut -b 1-23)
+  - echo "$NOW  INFO --- [INSTALL] Grant execute permission"
   - chmod +x .travis/install.sh
   - chmod +x .travis/deploy.sh
   - chmod +x mvnw
