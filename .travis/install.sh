@@ -9,6 +9,7 @@ source ./.travis/common.sh
 
 CURRENT_DIR=$(pwd)
 printInfo "[INSTALL] CURRENT_DIR: $CURRENT_DIR"
+printInfo "[INSTALL] List of CURRENT_DIR:"
 command "ls"
 
 # Run the Maven clean install

@@ -24,5 +24,3 @@ function printError() {
   echo -e "$(now) \e[31mERROR --- $1\e[0m"
   return 0
 }
-
-export -f printInfo printWarn printError
