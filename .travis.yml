@@ -17,7 +17,7 @@ install: skip
 before_script:
   - chmod +x .travis/common.sh
   - source ./.travis/common.sh
-  - "printInfo "[ INSTALL ] Grant execute permission""
+  - 'printInfo "[ INSTALL ] Grant execute permission"'
   - chmod +x .travis/install.sh
   - chmod +x .travis/deploy.sh
   - chmod +x mvnw
@@ -31,8 +31,8 @@ script:
 # Decrypt file `gpg.asc.enc` before deployment
 # https://docs.travis-ci.com/user/encrypting-files/
 before_deploy:
-  - "printWarn "[ DEPLOY ] TRAVIS_BRANCH: $TRAVIS_BRANCH""
-  - "printWarn "[ DEPLOY ] TRAVIS_TAG: $TRAVIS_TAG""
+  - 'printWarn "[ DEPLOY ] TRAVIS_BRANCH: $TRAVIS_BRANCH"'
+  - 'printWarn "[ DEPLOY ] TRAVIS_TAG: $TRAVIS_TAG"'
   - openssl aes-256-cbc -K $encrypted_4f0d00631887_key -iv $encrypted_4f0d00631887_iv -in .travis/gpg.asc.enc -out .travis/gpg.asc -d
 
 deploy:
