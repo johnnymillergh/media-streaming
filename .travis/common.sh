@@ -16,11 +16,11 @@ function printInfo() {
 }
 
 function printWarn() {
-  echo -e "$(now)  \e[32mWARN --- $1\e[0m"
+  echo -e "$(now)  \e[33mWARN --- $1\e[0m"
   return 0
 }
 
 function printError() {
-  echo -e "$(now) \e[32mERROR --- $1\e[0m"
+  echo -e "$(now) \e[31mERROR --- $1\e[0m"
   return 0
 }
