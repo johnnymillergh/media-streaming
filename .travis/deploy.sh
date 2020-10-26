@@ -7,6 +7,8 @@
 # expects file to exist:
 # - .travis/gpg.asc
 
+# Exit immediately if a command exits with a non-zero status.
+# https://stackoverflow.com/questions/19622198/what-does-set-e-mean-in-a-bash-script
 set -e
 
 # Check the variables are set
