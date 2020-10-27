@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.github.johnnymillergh.boot</groupId>
         <artifactId>media-streaming</artifactId>
-        <version>1.2.2-SNAPSHOT</version>
+        <version>1.3.0-SNAPSHOT</version>
     </parent>
     <artifactId>media-streaming-sample-app</artifactId>
     <name>Media Streaming :: Sample App</name>
