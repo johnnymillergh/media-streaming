@@ -39,9 +39,11 @@ public class WatchServiceSingleton {
             synchronized (WatchServiceSingleton.class) {
                 if (singletonInstance == null) {
                     singletonInstance = FileSystems.getDefault().newWatchService();
+                    log.debug("WatchService instance initiated.");
                 }
             }
         }
+        log.debug("WatchService is not null, returned directly");
         return singletonInstance;
     }
 
@@ -54,6 +56,7 @@ public class WatchServiceSingleton {
         Optional.ofNullable(singletonInstance).ifPresent(watchService -> {
             try {
                 watchService.close();
+                log.debug("WatchService closed.");
             } catch (IOException e) {
                 log.error("Exception occurred when closing WatchService.", e);
             }
