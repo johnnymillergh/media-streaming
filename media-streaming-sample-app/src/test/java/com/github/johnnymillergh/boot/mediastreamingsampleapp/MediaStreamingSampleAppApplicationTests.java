@@ -1,6 +1,6 @@
 package com.github.johnnymillergh.boot.mediastreamingsampleapp;
 
-import com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure.model.Video;
+import com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure.handler.VideoRouteHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +26,14 @@ class MediaStreamingSampleAppApplicationTests {
 
     @Test
     void videosTest() {
-        EntityExchangeResult<List<Video>> returnResult = webTestClient
+        EntityExchangeResult<List<VideoRouteHandler.VideoDetails>> returnResult = webTestClient
                 .get()
                 .uri("/videos")
                 .accept(MediaType.ALL)
                 .exchange()
                 .expectStatus()
                 .isOk()
-                .expectBodyList(Video.class)
+                .expectBodyList(VideoRouteHandler.VideoDetails.class)
                 .returnResult();
         log.info("Video test: {}", returnResult.getResponseBody());
     }

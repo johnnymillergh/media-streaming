@@ -102,7 +102,7 @@ public class VideoRouteHandler {
     }
 
     @Data
-    private static class VideoDetails {
+    public static class VideoDetails {
         private String name;
         private String link;
     }
