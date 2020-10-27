@@ -78,7 +78,7 @@ public class MediaStreamingAutoConfiguration {
     @Deprecated
     @SuppressWarnings("NullableProblems")
     public RouterFunction<ServerResponse> videoEndPoint(VideoRouteHandler videoRouteHandler) {
-        log.info("videoEndPoint");
+        log.debug("videoEndPoint");
         return route()
                 .nest(path("/videos"), builder -> builder.GET("", videoRouteHandler::listVideos)
                         .nest(path("/{name}"), videoBuilder -> videoBuilder.GET("", param("partial"),
@@ -89,8 +89,8 @@ public class MediaStreamingAutoConfiguration {
     }
 
     @Bean
-    public VideoController videoController(VideoRepository videoRepository) {
-        return new VideoController(videoRepository);
+    public VideoController videoController(VideoService videoService) {
+        return new VideoController(videoService);
     }
 
     @Bean

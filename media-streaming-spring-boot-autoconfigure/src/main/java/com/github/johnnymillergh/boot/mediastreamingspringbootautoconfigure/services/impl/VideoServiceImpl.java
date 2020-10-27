@@ -18,6 +18,7 @@ import reactor.core.publisher.Mono;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static java.lang.Long.min;
@@ -108,6 +109,11 @@ public class VideoServiceImpl implements VideoService {
             throw Exceptions.propagate(new VideoNotFoundException());
         }
         return fileLength;
+    }
+
+    @Override
+    public List<Video> getAllVideoList() {
+        return videoRepository.getAllVideoList();
     }
 
     public long getChunkSize(int size) {

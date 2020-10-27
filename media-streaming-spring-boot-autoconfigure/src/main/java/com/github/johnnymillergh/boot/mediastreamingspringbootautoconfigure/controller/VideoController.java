@@ -1,7 +1,7 @@
 package com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure.controller;
 
 import com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure.model.Video;
-import com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure.repository.VideoRepository;
+import com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure.services.VideoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,10 +19,10 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class VideoController {
-    private final VideoRepository videoRepository;
+    private final VideoService videoService;
 
     @GetMapping(value = "/video-annotation", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
     public Flux<List<Video>> getVideo() {
-        return Flux.interval(Duration.ofSeconds(2)).map(aLong -> videoRepository.getAllVideoList());
+        return Flux.interval(Duration.ofSeconds(2)).map(aLong -> videoService.getAllVideoList());
     }
 }

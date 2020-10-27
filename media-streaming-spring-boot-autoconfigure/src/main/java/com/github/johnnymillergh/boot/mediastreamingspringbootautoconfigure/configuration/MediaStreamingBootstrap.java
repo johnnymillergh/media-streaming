@@ -36,13 +36,12 @@ public class MediaStreamingBootstrap implements CommandLineRunner {
             fileWatcher = new FileWatcher(mediaStreamingProperties.getVideoDirectoryOnFileSystem());
         } catch (Exception e) {
             log.error("Cannot build FileWatcher, file observation failed! " +
-                      "Check `media-streaming.videoDirectoryOnFileSystem` configuration.", e);
+                              "Check `media-streaming.videoDirectoryOnFileSystem` configuration.", e);
             return;
         }
         fileWatcher.setFileWatcherHandler(new FileWatcherHandler() {
             @Override
             public void onCreated(Path file) {
-                log.debug("Created file observed: {}", file);
                 Video video = new Video();
                 video.setName(file.getFileName().toString());
                 video.setLocation(file);
@@ -51,13 +50,11 @@ public class MediaStreamingBootstrap implements CommandLineRunner {
 
             @Override
             public void onDeleted(Path file) {
-                log.debug("Deleted file observed: {}", file);
                 Mono.just(file).then(videoRepository.deleteVideoByPath(file)).subscribe();
             }
 
             @Override
             public void onModified(Path file) {
-                log.info("Modified file observed: {}", file);
                 Video video = new Video();
                 video.setName(file.getFileName().toString());
                 video.setLocation(file);
@@ -69,7 +66,7 @@ public class MediaStreamingBootstrap implements CommandLineRunner {
     @Override
     public void run(String... args) {
         fileService.getAllFiles()
-                .doOnNext(path -> log.debug("found file in path: " + path.toUri() + " FileName: " + path.getFileName()))
+                .doOnNext(path -> log.debug("Found file in path: {}, file name: {}", path.toUri(), path.getFileName()))
                 .flatMap(path -> {
                     Video video = new Video();
                     video.setName(path.getFileName().toString());
