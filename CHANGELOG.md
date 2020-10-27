@@ -1,3 +1,40 @@
+# [1.2.2](https://github.com/johnnymillergh/media-streaming/compare/v1.2.1...1.2.2) (2020-10-27)
+
+
+### Features
+
+* **MediaInfo:** support get media info ([23249f1](https://github.com/johnnymillergh/media-streaming/commit/23249f14f25390a3bf582a4f5dfd75a7201a194a))
+* **Webflux:** migrate to annotation based Webflux ([65b2dbf](https://github.com/johnnymillergh/media-streaming/commit/65b2dbf3636be215ff83e8f0d1ce8a254444693c))
+
+
+### Performance Improvements
+
+* **Bash:** abstract functions into common.sh ([5e3fc6f](https://github.com/johnnymillergh/media-streaming/commit/5e3fc6f8d3e78d4b0e253010309b00731424ce85))
+* **Concurrency:** improve Java object lock for FileWatcher::terminate() ([fe41844](https://github.com/johnnymillergh/media-streaming/commit/fe418446c2440cb41f76a3d36b7e8f82e95ac54d))
+* **FileWatcher:** capture ClosedWatchServiceException ([cf8f4ca](https://github.com/johnnymillergh/media-streaming/commit/cf8f4caea0e92ab9a68470023d9e37fed16f1962))
+* **FileWatcher:** close WatchService synchronously ([2e28596](https://github.com/johnnymillergh/media-streaming/commit/2e285961e1f136b860f1b1b8bbb53707243e2ead))
+* **FileWatcher:** gracefully destroy FileWatcher ([f1b9720](https://github.com/johnnymillergh/media-streaming/commit/f1b972091434903526d5b5e4807c96ddf5487acb))
+* **FileWatcher:** recursively monitor directory ([2195010](https://github.com/johnnymillergh/media-streaming/commit/2195010cecfa9a3f21ea015fee736c299a9d0d85))
+* **Travis:** beautify bash command ([5750e06](https://github.com/johnnymillergh/media-streaming/commit/5750e06e4624146c112ce6ebc2e983d2c1b8220a))
+* **Travis:** colorize bash command ([b6bd88d](https://github.com/johnnymillergh/media-streaming/commit/b6bd88d8904f265f9696a3111af6375583036ff5))
+* **Travis:** display timestamp ([037e9b1](https://github.com/johnnymillergh/media-streaming/commit/037e9b1ce663cc54080a98fa8c9365ed9a5e51ab))
+* **Travis:** make bash message bold ([73b7d97](https://github.com/johnnymillergh/media-streaming/commit/73b7d9798d15b3168b8b70b83d0fa3dd0b33ad4d))
+
+
+### Reverts
+
+* **Travis:** uncomment 'set -e' ([b4da625](https://github.com/johnnymillergh/media-streaming/commit/b4da62552d98d641887e7b4028b85cc56b5a7df9))
+
+
+### BREAKING CHANGES
+
+* **Concurrency:** improve Java object lock for FileWatcher::terminate()
+* **FileWatcher:** recursively monitor directory; fixed file not deleted
+under sub directory problem
+* **Webflux:** migrate to annotation based Webflux
+
+
+
 # [1.2.0](https://github.com/johnnymillergh/media-streaming/compare/v1.1.1...1.2.0) (2020-10-22)
 
 
