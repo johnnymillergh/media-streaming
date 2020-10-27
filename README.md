@@ -41,7 +41,7 @@ The easiest way is to install the library via [Nexus Repository Manager](https:/
 <dependency>
   <groupId>com.github.johnnymillergh.boot</groupId>
   <artifactId>media-streaming-spring-boot-starter</artifactId>
-  <version>1.2.1</version>
+  <version>1.2.2</version>
 </dependency>
 ```
 
