@@ -7,6 +7,8 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 /**
  * Description: VideoService, change description here.
  *
@@ -44,4 +46,11 @@ public interface VideoService {
      * @return the long
      */
     long lengthOf(UrlResource urlResource);
+
+    /**
+     * Gets all video list.
+     *
+     * @return the all video list
+     */
+    List<Video> getAllVideoList();
 }
