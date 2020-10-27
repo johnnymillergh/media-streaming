@@ -83,6 +83,9 @@ public class MediaStreamingBootstrap implements CommandLineRunner {
     @PreDestroy
     private void preDestroy() {
         log.debug("Destroying {}, fileWatcher: {}", this.getClass().getSimpleName(), fileWatcher);
-        Optional.ofNullable(fileWatcher).ifPresent(FileWatcher::destroy);
+        Optional.ofNullable(fileWatcher).ifPresent(fileWatcher1 -> {
+            fileWatcher1.terminate();
+            log.debug("FileWatcher terminated: {}", fileWatcher1.isTerminated());
+        });
     }
 }

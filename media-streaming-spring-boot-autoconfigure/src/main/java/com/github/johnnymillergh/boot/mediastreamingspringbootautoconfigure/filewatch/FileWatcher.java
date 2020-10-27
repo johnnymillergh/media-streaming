@@ -2,11 +2,8 @@ package com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure.fil
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.sun.nio.file.SensitivityWatchEventModifier;
-import lombok.AccessLevel;
-import lombok.Setter;
-import lombok.SneakyThrows;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 
 import java.io.IOException;
 import java.nio.file.*;
@@ -53,8 +50,8 @@ public class FileWatcher {
                                                      new WatchEvent.Kind[]{ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY},
                                                      SensitivityWatchEventModifier.HIGH);
                     WATCH_KEY_MAP.put(watchKey, dir);
-                    log.debug("Registering {} in watcher service. WATCH_KEY_MAP size: {}", dir,
-                              WATCH_KEY_MAP.values().size());
+                    log.debug("WATCH_KEY_MAP size: {}. Registering into watcher service. Path: {}",
+                              WATCH_KEY_MAP.values().size(), dir);
                     return FileVisitResult.CONTINUE;
                 }
             });
@@ -63,7 +60,11 @@ public class FileWatcher {
         }
     };
     @Setter(AccessLevel.NONE)
+    @Getter
     private volatile boolean terminated = false;
+    @Setter(AccessLevel.NONE)
+    @Getter(AccessLevel.PACKAGE)
+    private final Object terminateLock = new Object();
     private final Path monitoredPath;
     private FileWatcherHandler fileWatcherHandler;
 
@@ -157,10 +158,9 @@ public class FileWatcher {
      *
      * @author Johnny Miller (锺俊), email: johnnysviva@outlook.com, date: 10/27/2020 10:01 AM
      */
-    @SneakyThrows
-    public void destroy() {
+    public void terminate() {
         WatchServiceSingleton.close();
-        synchronized (this) {
+        synchronized (terminateLock) {
             this.terminated = true;
         }
         this.shutdownAndAwaitTermination();
@@ -178,7 +178,7 @@ public class FileWatcher {
     private void shutdownAndAwaitTermination() {
         // Disable new tasks from being submitted
         THREAD_POOL.shutdown();
-        log.debug("Shutdown THREAD_POOL for FileWatcher done.");
+        log.debug("Shutdown THREAD_POOL for FileWatcher done, disabled new tasks from being submitted.");
         try {
             // Wait a while for existing tasks to terminate
             if (!THREAD_POOL.awaitTermination(INTERVAL, TimeUnit.SECONDS)) {

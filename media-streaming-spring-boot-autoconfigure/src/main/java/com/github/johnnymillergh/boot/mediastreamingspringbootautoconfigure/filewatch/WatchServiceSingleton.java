@@ -43,7 +43,6 @@ public class WatchServiceSingleton {
                 }
             }
         }
-        log.debug("WatchService is not null, returned directly");
         return singletonInstance;
     }
 
