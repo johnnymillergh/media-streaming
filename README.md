@@ -41,7 +41,7 @@ The easiest way is to install the library via [Nexus Repository Manager](https:/
 <dependency>
   <groupId>com.github.johnnymillergh.boot</groupId>
   <artifactId>media-streaming-spring-boot-starter</artifactId>
-  <version>1.2.0-SNAPSHOT</version>
+  <version>1.2.2</version>
 </dependency>
 ```
 
@@ -58,6 +58,47 @@ Alternatively, download it from the [releases page](https://github.com/johnnymil
 2. Build with the newest IntelliJ IDEA.
 
 3. Click the green triangle to Run.
+
+## Useful Commands
+
+### Maven
+
+1. Set project version:
+
+   ```shell
+   mvn versions:set -DgenerateBackupPoms=false -f pom.xml
+   ```
+
+2. Build project:
+
+   ```shell
+   mvn clean validate compile -f pom.xml
+   ```
+
+### Conventional Changelog CLI
+
+1. Install global dependencies (optional if installed):
+
+   ```shell
+   npm install -g conventional-changelog-cli
+   ```
+
+2. This will *not* overwrite any previous changelogs. The above generates a changelog based on commits since the last semver tag that matches the pattern of "Feature", "Fix", "Performance Improvement" or "Breaking Changes".
+
+   ```shell
+   conventional-changelog -p angular -i CHANGELOG.md -s
+   ```
+
+3. If this is your first time using this tool and you want to generate all previous changelogs, you could do:
+
+   ```
+   conventional-changelog -p angular -i CHANGELOG.md -s -r 0
+   ```
+
+## CI (Continuous Integration)
+
+- [Travis CI](https://travis-ci.com/github/johnnymillergh/media-streaming) is for deploying SNAPSHOT and RELEASE on Nexus Central Repository.
+- [GitHub Actions](https://github.com/johnnymillergh/media-streaming/actions) is for checking dependency updates and tests.
 
 ## Maintainers
 

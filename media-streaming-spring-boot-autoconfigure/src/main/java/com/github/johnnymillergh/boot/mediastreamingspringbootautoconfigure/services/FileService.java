@@ -3,6 +3,7 @@ package com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure.ser
 import com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure.exception.BadResourceLocationException;
 import reactor.core.Exceptions;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.io.IOException;
 import java.nio.file.FileVisitOption;
@@ -24,10 +25,18 @@ public interface FileService {
     Flux<Path> getAllFiles();
 
     /**
+     * Gets file by file name.
+     *
+     * @param fileName the file name
+     * @return the file by file name
+     */
+    Mono<Path> getFileByFileName(String fileName);
+
+    /**
      * default method to create a flux from a stream of file paths
      *
      * @param path to traverse
-     * @return flux
+     * @return flux flux
      */
     default Flux<Path> fromPath(Path path) {
         return Flux.using(() -> Files.walk(path, FileVisitOption.FOLLOW_LINKS), Flux::fromStream, BaseStream::close)

@@ -8,6 +8,8 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.nio.file.Path;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -36,6 +38,11 @@ public class InMemoryVideoOnFileSystemRepository implements VideoRepository {
     @Override
     public Flux<Video> getAllVideos() {
         return Flux.fromIterable(VIDEO_CACHE.values());
+    }
+
+    @Override
+    public List<Video> getAllVideoList() {
+        return new LinkedList<>(VIDEO_CACHE.values());
     }
 
     @Override
