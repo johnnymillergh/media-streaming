@@ -1,13 +1,15 @@
 package com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure.configuration;
 
-import com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure.controller.VideoController;
+import com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure.controller.MediaStreamingReactiveController;
 import com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure.handler.MediaStreamingExceptionHandler;
 import com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure.handler.VideoRouteHandler;
 import com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure.repository.VideoRepository;
 import com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure.repository.impl.InMemoryVideoOnFileSystemRepository;
 import com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure.services.FileService;
+import com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure.services.MediaInfoService;
 import com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure.services.VideoService;
 import com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure.services.impl.FileServiceImpl;
+import com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure.services.impl.MediaInfoServiceImpl;
 import com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure.services.impl.VideoServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -89,8 +91,9 @@ public class MediaStreamingAutoConfiguration {
     }
 
     @Bean
-    public VideoController videoController(VideoService videoService) {
-        return new VideoController(videoService);
+    public MediaStreamingReactiveController videoController(VideoService videoService,
+                                                            MediaInfoService mediaInfoService) {
+        return new MediaStreamingReactiveController(videoService, mediaInfoService);
     }
 
     @Bean
@@ -101,14 +104,20 @@ public class MediaStreamingAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public FileService fileService() {
-        return new FileServiceImpl(mediaStreamingProperties);
+    public FileService fileService(VideoRepository videoRepository) {
+        return new FileServiceImpl(mediaStreamingProperties, videoRepository);
     }
 
     @Bean
     @ConditionalOnMissingBean
     public VideoRepository videoRepository() {
         return new InMemoryVideoOnFileSystemRepository();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public MediaInfoService mediaInfoService(FileService fileService) {
+        return new MediaInfoServiceImpl(fileService);
     }
 
     @SuppressWarnings("SameParameterValue")
