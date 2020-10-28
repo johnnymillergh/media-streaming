@@ -35,8 +35,9 @@ public class MediaStreamingBootstrap implements CommandLineRunner {
         try {
             fileWatcher = new FileWatcher(mediaStreamingProperties.getVideoDirectoryOnFileSystem());
         } catch (Exception e) {
-            log.error("Cannot build FileWatcher, file observation failed! " +
-                              "Check `media-streaming.videoDirectoryOnFileSystem` configuration.", e);
+            log.error(
+                    "Cannot build [{}], file observation failed! Check `media-streaming.videoDirectoryOnFileSystem` " +
+                            "configuration.", FileWatcher.class, e);
             return;
         }
         fileWatcher.setFileWatcherHandler(new FileWatcherHandler() {

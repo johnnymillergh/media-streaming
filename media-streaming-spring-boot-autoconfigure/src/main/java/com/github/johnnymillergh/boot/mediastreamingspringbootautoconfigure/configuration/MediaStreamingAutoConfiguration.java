@@ -17,6 +17,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.StringUtils;
 import org.springframework.web.reactive.function.server.RequestPredicate;
 import org.springframework.web.reactive.function.server.RequestPredicates;
 import org.springframework.web.reactive.function.server.RouterFunction;
@@ -41,12 +42,32 @@ public class MediaStreamingAutoConfiguration {
 
     @PostConstruct
     public void afterInitialization() {
-        log.debug("MediaStreamingAutoConfiguration initialization is done. {}", mediaStreamingProperties);
+        log.debug("MediaStreamingAutoConfiguration initialization is done. About to inject beans. {}",
+                  mediaStreamingProperties);
+    }
+
+    /**
+     * Check conditions boolean.
+     *
+     * @param beanType the bean type
+     * @return the boolean
+     */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+    private boolean checkConditions(final Class<?> beanType) {
+        if (StringUtils.isEmpty(mediaStreamingProperties.getVideoDirectoryOnFileSystem())) {
+            log.error("Property `media-streaming.videoDirectoryOnFileSystem` is empty or invalid! " +
+                              "Will not configure bean: {}", beanType);
+            return false;
+        }
+        return true;
     }
 
     @Bean
     @ConditionalOnMissingBean
     public MediaStreamingBootstrap bootstrap(VideoRepository videoRepository, FileService fileService) {
+        if (!checkConditions(MediaStreamingBootstrap.class)) {
+            return null;
+        }
         return new MediaStreamingBootstrap(videoRepository, fileService, mediaStreamingProperties);
     }
 
@@ -64,7 +85,10 @@ public class MediaStreamingAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public VideoRouteHandler videoRouteHandler(VideoService videoService, FileService fileService) {
+    public VideoRouteHandler videoRouteHandler(VideoService videoService) {
+        if (!checkConditions(VideoRouteHandler.class)) {
+            return null;
+        }
         return new VideoRouteHandler(videoService);
     }
 
@@ -80,6 +104,9 @@ public class MediaStreamingAutoConfiguration {
     @Deprecated
     @SuppressWarnings("NullableProblems")
     public RouterFunction<ServerResponse> videoEndPoint(VideoRouteHandler videoRouteHandler) {
+        if (!checkConditions(RouterFunction.class)) {
+            return null;
+        }
         log.debug("videoEndPoint");
         return route()
                 .nest(path("/videos"), builder -> builder.GET("", videoRouteHandler::listVideos)
@@ -93,6 +120,9 @@ public class MediaStreamingAutoConfiguration {
     @Bean
     public MediaStreamingReactiveController videoController(VideoService videoService,
                                                             MediaInfoService mediaInfoService) {
+        if (!checkConditions(MediaStreamingReactiveController.class)) {
+            return null;
+        }
         return new MediaStreamingReactiveController(videoService, mediaInfoService);
     }
 
