@@ -149,78 +149,6 @@ public class FileWatcher {
     };
 
     /**
-     * Monitor directory recursively.
-     *
-     * @author Johnny Miller (锺俊), email: johnnysviva@outlook.com, date: 10/27/2020 9:46 AM
-     * @deprecated will be deleted after refactoring Callable thread pool task.
-     */
-    @Deprecated
-    @SuppressWarnings("unused")
-    private void monitorRecursively() {
-        while (!terminated) {
-            // Wait for key to be signaled
-            final Optional<WatchKey> optionalWatchKey;
-            try {
-                optionalWatchKey = Optional.ofNullable(WatchServiceSingleton.getInstance().poll());
-            } catch (ClosedWatchServiceException e) {
-                log.error("Detected closed WatchService. Terminating followup FileWatcher operations.", e);
-                return;
-            }
-
-            if (optionalWatchKey.isPresent()) {
-                val watchKey = optionalWatchKey.get();
-                val optionalDirectory = Optional.ofNullable(WATCH_KEY_MAP.get(watchKey));
-                if (optionalDirectory.isEmpty()) {
-                    log.warn("WatchKey {} not recognized!", watchKey);
-                    continue;
-                }
-
-                watchKey.pollEvents()
-                        .stream()
-                        // This watcherKey is registered only for ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY events,
-                        // but an OVERFLOW event can occur regardless if events are lost or discarded.
-                        .filter(watchEvent -> (watchEvent.kind() != OVERFLOW))
-                        // Iterate WatchEvent
-                        .forEach(watchEvent -> {
-                            // The filename is the context of the event if possible.
-                            @SuppressWarnings("unchecked") val absolutePath =
-                                    optionalDirectory.get().resolve(((WatchEvent<Path>) watchEvent).context());
-                            val file = absolutePath.toFile();
-                            val kind = watchEvent.kind();
-                            if (file.isDirectory()) {
-                                log.debug("Absolute path found. Path: {}", absolutePath);
-                                REGISTER.accept(absolutePath);
-                            } else {
-                                log.debug("Detected file change. File: {}, WatchEvent kind: {}", file, kind);
-                                val optionalFileWatcherHandler = Optional.ofNullable(this.fileWatcherHandler);
-                                if (optionalFileWatcherHandler.isEmpty()) {
-                                    log.warn("FileWatcherHandler is null! FileWatcher will not work properly.");
-                                }
-                                optionalFileWatcherHandler.ifPresent(handler -> {
-                                    if (kind == ENTRY_CREATE) {
-                                        this.fileWatcherHandler.onCreated(absolutePath);
-                                    } else if (kind == ENTRY_DELETE) {
-                                        this.fileWatcherHandler.onDeleted(absolutePath);
-                                    } else if (kind == ENTRY_MODIFY) {
-                                        this.fileWatcherHandler.onModified(absolutePath);
-                                    }
-                                });
-                            }
-                        });
-
-                // IMPORTANT: The key must be reset after processed
-                // Reset the key -- this step is critical if you want to receive further watch events.
-                // If the key is no longer valid, the directory is inaccessible so exit the loop.
-                val valid = watchKey.reset();
-                if (!valid) {
-                    log.debug("The watch key wasn't valid. {}", watchKey);
-                    break;
-                }
-            }
-        }
-    }
-
-    /**
      * Destroy FileWatcher.
      * <p>
      * 1. Close WatchService
@@ -245,13 +173,12 @@ public class FileWatcher {
         int count = 0;
         while (futureTasks.size() != count) {
             for (Future<Void> futureTask : futureTasks) {
-                boolean done = futureTask.isDone();
-                log.warn("Future task is done?: {}", done);
-                if (done) {
+                if (futureTask.isDone()) {
                     count++;
                 }
             }
         }
+        log.warn("Future tasks for FileWatcher were all done.");
     }
 
     /**
