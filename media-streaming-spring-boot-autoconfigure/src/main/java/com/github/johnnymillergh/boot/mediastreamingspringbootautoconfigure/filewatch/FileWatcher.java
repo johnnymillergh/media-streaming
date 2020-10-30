@@ -61,11 +61,11 @@ public class FileWatcher {
             throw new RuntimeException(String.format("Error registering path: %s", path));
         }
     };
-    @Setter(AccessLevel.NONE)
     @Getter
-    private volatile boolean terminated = false;
     @Setter(AccessLevel.NONE)
+    private volatile boolean terminated = false;
     @Getter(AccessLevel.PACKAGE)
+    @Setter(AccessLevel.NONE)
     private final Object terminateLock = new Object();
     private final Path monitoredPath;
     private FileWatcherHandler fileWatcherHandler;
@@ -83,6 +83,8 @@ public class FileWatcher {
         futureTasks.add(THREAD_POOL.submit(monitor));
     }
 
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     private Callable<Void> monitor = () -> {
         while (!terminated) {
             // Wait for key to be signaled
