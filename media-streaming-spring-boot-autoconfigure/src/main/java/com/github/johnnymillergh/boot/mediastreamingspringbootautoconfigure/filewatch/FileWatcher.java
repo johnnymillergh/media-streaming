@@ -191,6 +191,13 @@ public class FileWatcher {
      * <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/concurrent/ExecutorService.html">ExecutorService</a>
      */
     private void shutdownAndAwaitTermination() {
+        log.debug("THREAD_POOL for FileWatcher is being terminated. " +
+                          "Pool size: {}, queue size: {}, task count: {}, active count: {}, completed count: {}",
+                  ((ThreadPoolExecutor) THREAD_POOL).getPoolSize(),
+                  ((ThreadPoolExecutor) THREAD_POOL).getQueue().size(),
+                  ((ThreadPoolExecutor) THREAD_POOL).getTaskCount(),
+                  ((ThreadPoolExecutor) THREAD_POOL).getActiveCount(),
+                  ((ThreadPoolExecutor) THREAD_POOL).getCompletedTaskCount());
         // Disable new tasks from being submitted
         THREAD_POOL.shutdown();
         log.debug("Shutdown THREAD_POOL for FileWatcher done, disabled new tasks from being submitted.");
@@ -207,13 +214,18 @@ public class FileWatcher {
                 }
             }
         } catch (InterruptedException e) {
-            log.debug("InterruptedException occurred when shutting down THREAD_POOL", e);
+            log.error("InterruptedException occurred when shutting down THREAD_POOL", e);
             // (Re-)Cancel if current thread also interrupted
             THREAD_POOL.shutdownNow();
             // Preserve interrupt status
             Thread.currentThread().interrupt();
         }
-        log.debug("THREAD_POOL for FileWatcher terminated. Current thread: {}, state: {}", Thread.currentThread(),
-                  Thread.currentThread().getState());
+        log.debug("THREAD_POOL for FileWatcher was terminated. " +
+                          "Pool size: {}, queue size: {}, task count: {}, active count: {}, completed count: {}",
+                  ((ThreadPoolExecutor) THREAD_POOL).getPoolSize(),
+                  ((ThreadPoolExecutor) THREAD_POOL).getQueue().size(),
+                  ((ThreadPoolExecutor) THREAD_POOL).getTaskCount(),
+                  ((ThreadPoolExecutor) THREAD_POOL).getActiveCount(),
+                  ((ThreadPoolExecutor) THREAD_POOL).getCompletedTaskCount());
     }
 }
