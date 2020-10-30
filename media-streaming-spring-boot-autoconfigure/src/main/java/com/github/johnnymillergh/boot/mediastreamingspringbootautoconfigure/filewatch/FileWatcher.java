@@ -69,7 +69,9 @@ public class FileWatcher {
     private final Object terminateLock = new Object();
     private final Path monitoredPath;
     private FileWatcherHandler fileWatcherHandler;
-    private List<Future<Void>> futureTasks = new LinkedList<>();
+    @Getter
+    @Setter(AccessLevel.NONE)
+    private final List<Future<Void>> futureTasks = new LinkedList<>();
 
     public FileWatcher(String directory) {
         this(Paths.get(directory));
@@ -85,7 +87,7 @@ public class FileWatcher {
 
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
-    private Callable<Void> monitor = () -> {
+    private final Callable<Void> monitor = () -> {
         while (!terminated) {
             // Wait for key to be signaled
             final Optional<WatchKey> optionalWatchKey;
