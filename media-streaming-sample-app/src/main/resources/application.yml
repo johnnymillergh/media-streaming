@@ -3,6 +3,7 @@ media-streaming:
 
 # Configure logging level of Media Streaming
 logging:
+  config: classpath:configuration/logback/logback.xml
   level:
     com.github.johnnymillergh.boot.mediastreamingspringbootautoconfigure: DEBUG
 

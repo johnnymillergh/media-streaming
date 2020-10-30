@@ -1,0 +1,89 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box
+}
+
+html {
+    font-size: 12px;
+    font-family: Ubuntu, simHei, sans-serif;
+    font-weight: 400
+}
+
+body {
+    font-size: 1rem
+}
+
+button {
+    outline: none;
+    padding: 5px 8px;
+    color: #fff;
+    border: 1px solid #BCBCBC;
+    border-radius: 3px;
+    background-color: #009A61;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+#app {
+    margin: 48px auto 0;
+    max-width: 640px;
+    -webkit-perspective: 500px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.message-box {
+    background-color: firebrick;
+    max-width: 700px;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 48px auto 20px;
+}
+
+.slide-in-bck-center {
+    animation: slide-in-bck-center 1.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@keyframes slide-in-bck-center {
+    0% {
+        transform: translateZ(600px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateZ(0);
+        opacity: 1;
+    }
+}
+
+.message-text {
+    font-size: xx-large;
+    text-align: center;
+    color: ivory;
+}
+
+.social-image {
+    width: 600px;
+    border-radius: 8px;
+}
+
+.message-title {
+    text-align: center;
+    display: block;
+    font-size: 48px;
+    text-shadow: black 2px 2px 6px;
+}
+
+.server-name {
+    color: gold;
+}
+
+.go-to {
+    display: inline-block;
+    margin-bottom: 6px;
+}

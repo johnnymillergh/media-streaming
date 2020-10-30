@@ -34,3 +34,4 @@ build/
 
 ### Custom Ignored ###
 /.travis/**.asc
+/logs

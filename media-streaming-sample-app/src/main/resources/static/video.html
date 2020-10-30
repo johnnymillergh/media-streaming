@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<!--suppress HtmlUnknownAttribute -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Media Streaming :: Sample App</title>
+    <link rel="icon" href="icon/favicon.ico">
+    <link rel="stylesheet" href="styles/video.css">
+</head>
+<body>
+<div id="app">
+    <div class="slide-in-bck-center greeting-box">
+        <strong class="greeting-text">
+            <span class="greeting-title">Hello, World!</span>
+            Welcome to <span class="server-name">{{ projectArtifactId }}</span>!
+        </strong>
+        <video width="760px" controls style="display: block;">
+            <source :src="videoSource" type="video/mp4">
+        </video>
+    </div>
+</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="script/video.js"></script>
+</html>

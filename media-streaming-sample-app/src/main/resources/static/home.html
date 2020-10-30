@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Media Streaming :: Sample App</title>
+    <link rel="icon" href="icon/favicon.ico">
+    <link rel="stylesheet" href="styles/home.css">
+</head>
+<body>
+<div id="app">
+    <div class="slide-in-bck-center greeting-box">
+        <span class="greeting-title">Hello, World!</span>
+        <strong class="greeting-text">
+            Welcome to <span class="server-name">{{ projectArtifactId }}</span>!
+        </strong>
+        <button class="go-to" @click="handleClickSwaggerApiDocumentation">Go to Swagger API Documentation</button>
+        <button class="go-to" @click="handleClickVideoDemo">Go to Video Demo</button>
+        <img class="social-image"
+             src="https://raw.githubusercontent.com/johnnymillergh/MaterialLibrary/master/media-streaming/media-streaming-social-image.png"
+             alt="Media streaming social image">
+    </div>
+    <fieldset>
+        <legend>Create New Person</legend>
+        <div class="form-group">
+            <label>Name:</label>
+            <label>
+                <input type="text" v-model="newPerson.name"/>
+            </label>
+        </div>
+        <div class="form-group">
+            <label>Age:</label>
+            <label>
+                <input type="text" v-model="newPerson.age"/>
+            </label>
+        </div>
+        <div class="form-group">
+            <label>Sex:</label>
+            <label>
+                <select v-model="newPerson.sex">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </label>
+        </div>
+        <div class="form-group">
+            <label></label>
+            <button @click="createPerson">Create</button>
+        </div>
+    </fieldset>
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Sex</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="(person, index) in people">
+            <td>{{ person.name }}</td>
+            <td>{{ person.age }}</td>
+            <td>{{ person.sex }}</td>
+            <td :class="'text-center'">
+                <button @click="deletePerson(index)">Delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <span>This page is provided by
+        <a href="https://github.com/keepfool/vue-tutorials/blob/master/01.GettingStarted/simple-demo.html">keepfool</a>.
+    </span>
+</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="script/home.js"></script>
+</html>
