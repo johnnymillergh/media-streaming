@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.*;
 import java.util.function.Consumer;
@@ -26,7 +28,7 @@ public class FileWatcher {
     private static final ThreadFactory NAMED_THREAD_FACTORY =
             new ThreadFactoryBuilder().setNameFormat("file-watcher-%d").build();
     private static final ExecutorService THREAD_POOL =
-            new ThreadPoolExecutor(2, 4, 0L, TimeUnit.MILLISECONDS,
+            new ThreadPoolExecutor(1, 2, 0L, TimeUnit.MILLISECONDS,
                                    new LinkedBlockingQueue<>(1024), NAMED_THREAD_FACTORY,
                                    new ThreadPoolExecutor.AbortPolicy());
     private static final long INTERVAL = 10L;
@@ -67,6 +69,7 @@ public class FileWatcher {
     private final Object terminateLock = new Object();
     private final Path monitoredPath;
     private FileWatcherHandler fileWatcherHandler;
+    private List<Future<Void>> futureTasks = new LinkedList<>();
 
     public FileWatcher(String directory) {
         this(Paths.get(directory));
@@ -74,17 +77,85 @@ public class FileWatcher {
 
     @SneakyThrows
     private FileWatcher(Path path) {
-        this.monitoredPath = path;
+        monitoredPath = path;
         log.debug("Starting Recursive Watcher");
         REGISTER.accept(monitoredPath);
-        THREAD_POOL.execute(this::monitorRecursively);
+        futureTasks.add(THREAD_POOL.submit(monitor));
     }
+
+    private Callable<Void> monitor = () -> {
+        while (!terminated) {
+            // Wait for key to be signaled
+            final Optional<WatchKey> optionalWatchKey;
+            try {
+                optionalWatchKey = Optional.ofNullable(WatchServiceSingleton.getInstance().poll());
+            } catch (ClosedWatchServiceException e) {
+                log.error("Detected closed WatchService. Terminating followup FileWatcher operations.", e);
+                return null;
+            }
+
+            if (optionalWatchKey.isPresent()) {
+                val watchKey = optionalWatchKey.get();
+                val optionalDirectory = Optional.ofNullable(WATCH_KEY_MAP.get(watchKey));
+                if (optionalDirectory.isEmpty()) {
+                    log.warn("WatchKey {} not recognized!", watchKey);
+                    continue;
+                }
+
+                watchKey.pollEvents()
+                        .stream()
+                        // This watcherKey is registered only for ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY events,
+                        // but an OVERFLOW event can occur regardless if events are lost or discarded.
+                        .filter(watchEvent -> (watchEvent.kind() != OVERFLOW))
+                        // Iterate WatchEvent
+                        .forEach(watchEvent -> {
+                            // The filename is the context of the event if possible.
+                            @SuppressWarnings("unchecked") val absolutePath =
+                                    optionalDirectory.get().resolve(((WatchEvent<Path>) watchEvent).context());
+                            val file = absolutePath.toFile();
+                            val kind = watchEvent.kind();
+                            if (file.isDirectory()) {
+                                log.debug("Absolute path found. Path: {}", absolutePath);
+                                REGISTER.accept(absolutePath);
+                            } else {
+                                log.debug("Detected file change. File: {}, WatchEvent kind: {}", file, kind);
+                                val optionalFileWatcherHandler = Optional.ofNullable(this.fileWatcherHandler);
+                                if (optionalFileWatcherHandler.isEmpty()) {
+                                    log.warn("FileWatcherHandler is null! FileWatcher will not work properly.");
+                                }
+                                optionalFileWatcherHandler.ifPresent(handler -> {
+                                    if (kind == ENTRY_CREATE) {
+                                        this.fileWatcherHandler.onCreated(absolutePath);
+                                    } else if (kind == ENTRY_DELETE) {
+                                        this.fileWatcherHandler.onDeleted(absolutePath);
+                                    } else if (kind == ENTRY_MODIFY) {
+                                        this.fileWatcherHandler.onModified(absolutePath);
+                                    }
+                                });
+                            }
+                        });
+
+                // IMPORTANT: The key must be reset after processed
+                // Reset the key -- this step is critical if you want to receive further watch events.
+                // If the key is no longer valid, the directory is inaccessible so exit the loop.
+                val valid = watchKey.reset();
+                if (!valid) {
+                    log.debug("The watch key wasn't valid. {}", watchKey);
+                    break;
+                }
+            }
+        }
+        return null;
+    };
 
     /**
      * Monitor directory recursively.
      *
      * @author Johnny Miller (锺俊), email: johnnysviva@outlook.com, date: 10/27/2020 9:46 AM
+     * @deprecated will be deleted after refactoring Callable thread pool task.
      */
+    @Deprecated
+    @SuppressWarnings("unused")
     private void monitorRecursively() {
         while (!terminated) {
             // Wait for key to be signaled
@@ -160,10 +231,27 @@ public class FileWatcher {
      */
     public void terminate() {
         WatchServiceSingleton.close();
+        awaitTasks();
         synchronized (terminateLock) {
             this.terminated = true;
         }
         this.shutdownAndAwaitTermination();
+    }
+
+    /**
+     * Await tasks to finish.
+     */
+    private void awaitTasks() {
+        int count = 0;
+        while (futureTasks.size() != count) {
+            for (Future<Void> futureTask : futureTasks) {
+                boolean done = futureTask.isDone();
+                log.warn("Future task is done?: {}", done);
+                if (done) {
+                    count++;
+                }
+            }
+        }
     }
 
     /**
@@ -182,7 +270,8 @@ public class FileWatcher {
         try {
             // Wait a while for existing tasks to terminate
             if (!THREAD_POOL.awaitTermination(INTERVAL, TimeUnit.SECONDS)) {
-                THREAD_POOL.shutdownNow(); // Cancel currently executing tasks
+                // Cancel currently executing tasks
+                THREAD_POOL.shutdownNow();
                 // Wait a while for tasks to respond to being cancelled,
                 // true if this executor terminated and false if the timeout elapsed before termination
                 if (!THREAD_POOL.awaitTermination(INTERVAL, TimeUnit.SECONDS)) {
