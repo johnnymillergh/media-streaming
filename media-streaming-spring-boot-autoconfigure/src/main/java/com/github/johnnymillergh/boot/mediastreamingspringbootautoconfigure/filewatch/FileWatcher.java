@@ -29,7 +29,7 @@ public class FileWatcher {
             new ThreadFactoryBuilder().setNameFormat("file-watcher-%d").build();
     private static final ExecutorService THREAD_POOL =
             new ThreadPoolExecutor(1, 2, 0L, TimeUnit.MILLISECONDS,
-                                   new LinkedBlockingQueue<>(1024), NAMED_THREAD_FACTORY,
+                                   new LinkedBlockingQueue<>(2), NAMED_THREAD_FACTORY,
                                    new ThreadPoolExecutor.AbortPolicy());
     private static final long INTERVAL = 10L;
     private static final ConcurrentHashMap<WatchKey, Path> WATCH_KEY_MAP = new ConcurrentHashMap<>(256);
@@ -80,7 +80,7 @@ public class FileWatcher {
     @SneakyThrows
     private FileWatcher(Path path) {
         monitoredPath = path;
-        log.debug("Starting Recursive Watcher");
+        log.debug("Starting Recursive Watcher…");
         REGISTER.accept(monitoredPath);
         futureTasks.add(THREAD_POOL.submit(monitor));
     }
@@ -92,7 +92,7 @@ public class FileWatcher {
             // Wait for key to be signaled
             final Optional<WatchKey> optionalWatchKey;
             try {
-                optionalWatchKey = Optional.ofNullable(WatchServiceSingleton.getInstance().poll());
+                optionalWatchKey = Optional.ofNullable(WatchServiceSingleton.getInstance().take());
             } catch (ClosedWatchServiceException e) {
                 log.error("Detected closed WatchService. Terminating followup FileWatcher operations.", e);
                 return null;
