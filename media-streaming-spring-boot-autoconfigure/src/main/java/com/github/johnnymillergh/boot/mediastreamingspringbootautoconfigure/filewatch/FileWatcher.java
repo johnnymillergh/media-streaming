@@ -23,7 +23,6 @@ import static java.nio.file.StandardWatchEventKinds.*;
  * @see <a href='https://github.com/WhileLoop/file-watcher/'>Inspired by file-watcher</a>
  **/
 @Slf4j
-@Setter
 public class FileWatcher {
     private static final ThreadFactory NAMED_THREAD_FACTORY =
             new ThreadFactoryBuilder().setNameFormat("file-watcher-%d").build();
@@ -62,15 +61,14 @@ public class FileWatcher {
         }
     };
     @Getter
-    @Setter(AccessLevel.NONE)
     private volatile boolean terminated = false;
     @Getter(AccessLevel.PACKAGE)
-    @Setter(AccessLevel.NONE)
     private final Object terminateLock = new Object();
+    @SuppressWarnings("FieldCanBeLocal")
     private final Path monitoredPath;
+    @Setter
     private FileWatcherHandler fileWatcherHandler;
     @Getter
-    @Setter(AccessLevel.NONE)
     private final List<Future<Void>> futureTasks = new LinkedList<>();
 
     public FileWatcher(String directory) {
