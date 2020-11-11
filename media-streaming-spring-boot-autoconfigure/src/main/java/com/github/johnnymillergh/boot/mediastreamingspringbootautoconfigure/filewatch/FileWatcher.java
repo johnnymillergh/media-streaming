@@ -23,7 +23,7 @@ import static java.nio.file.StandardWatchEventKinds.*;
  * deleting file. Then using callback methods of  <code>FileWatcherHandler</code> to notify changes.</p>
  * <h2>How <code>FileWatcher</code> works</h2>
  * <p>Initiate <code>FileWatcher</code>variable with public construction method,</p>
- * <pre><code class='language-java' lang='java'>final FileWatcher fileWatcher = new FileWatcher(&#39;/absolute/file/path/string&#39;);
+ * <pre><code>final FileWatcher fileWatcher = new FileWatcher(&#39;/absolute/file/path/string&#39;);
  * </code></pre>
  * <p>Remember, if <code>/absolute/file/path/string</code> doesn&#39;t exist, the construction method will throw
  * exception.</p>
