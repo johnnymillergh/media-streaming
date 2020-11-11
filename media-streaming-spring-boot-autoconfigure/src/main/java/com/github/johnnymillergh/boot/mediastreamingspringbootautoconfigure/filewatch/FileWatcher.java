@@ -17,7 +17,23 @@ import java.util.function.Consumer;
 import static java.nio.file.StandardWatchEventKinds.*;
 
 /**
- * Description: FileWatcher, change description here.
+ * <h1>File Watcher</h1>
+ * <h2>Why do we need File Watcher?</h2>
+ * <p>To monitor the server&#39;s file system, to sense file changes, such as creating file, modifying file and
+ * deleting file. Then using callback methods of  <code>FileWatcherHandler</code> to notify changes.</p>
+ * <h2>How <code>FileWatcher</code> works</h2>
+ * <p>Initiate <code>FileWatcher</code>variable with public construction method,</p>
+ * <pre><code class='language-java' lang='java'>final FileWatcher fileWatcher = new FileWatcher(&#39;/absolute/file/path/string&#39;);
+ * </code></pre>
+ * <p>Remember, if <code>/absolute/file/path/string</code> doesn&#39;t exist, the construction method will throw
+ * exception.</p>
+ * <p>After while <code>fileWatcher</code> is being built, <code>FileWatcher</code> will monitor the path recursively
+ * . For example, <code>FileWatcher</code> will also monitor the sub directory of the given path.</p>
+ * <h2>Implementations of File Watcher</h2>
+ * <ol>
+ * <li><code>Files.walkFileTree</code> is to traverse given absolute file path recursively.</li>
+ * <li><code>WatchServiceSingleton</code> is to monitor file changes for every file path.</li>
+ * </ol>
  *
  * @author Johnny Miller (锺俊), email: johnnysviva@outlook.com, date: 10/20/2020 3:19 PM
  * @see <a href='https://github.com/WhileLoop/file-watcher/'>Inspired by file-watcher</a>
@@ -80,6 +96,7 @@ public class FileWatcher {
         monitoredPath = path;
         log.debug("Starting Recursive Watcher…");
         REGISTER.accept(monitoredPath);
+        // Store Future<Void> is for awaiting task done while shutting down
         futureTasks.add(THREAD_POOL.submit(monitor));
     }
 
